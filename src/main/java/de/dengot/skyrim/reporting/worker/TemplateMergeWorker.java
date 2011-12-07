@@ -5,37 +5,41 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
+
 public class TemplateMergeWorker implements Runnable {
 
-    private Queue<TemplateMergePayload> workload;
-    
-    
+    private static final XLogger LOGGER = XLoggerFactory.getXLogger(TemplateMergeWorker.class);
+
+    private Queue<TemplateMergeWorkload> workloadQueue;
+
     public TemplateMergeWorker() {
         super();
-        workload = new LinkedList<TemplateMergePayload>();
+        workloadQueue = new LinkedList<TemplateMergeWorkload>();
     }
 
-    public void enqueue(TemplateMergePayload payload) {
-        workload.add(payload);
+    public void enqueue(TemplateMergeWorkload workload) {
+        workloadQueue.add(workload);
     }
 
     public void run() {
 
         try {
-            TemplateMergePayload payload = null;
-            while((payload = workload.poll()) != null){
-                
-                System.out.println("Writing " + payload.getOutputFile().getPath());
-                
-                FileWriter writer = new FileWriter(payload.getOutputFile());
-                payload.getTemplate().merge(payload.getContext(), writer);
+            TemplateMergeWorkload workload = null;
+            while ((workload = workloadQueue.poll()) != null) {
+
+                LOGGER.trace("Writing " + workload.getOutputFile().getPath());
+
+                FileWriter writer = new FileWriter(workload.getOutputFile());
+                workload.getTemplate().merge(workload.getContext(), writer);
                 writer.flush();
-                writer.close();    
+                writer.close();
             }
-            
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOGGER.catching(e);
         }
     }
-    
+
 }

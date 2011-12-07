@@ -6,9 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -17,6 +17,8 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.jfree.chart.JFreeChart;
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
 
 import de.dengot.skyrim.io.ChartWriter;
 import de.dengot.skyrim.io.PngChartWriter;
@@ -28,11 +30,16 @@ import de.dengot.skyrim.reporting.chart.CategoryBarChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelBarChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelCumulativeAreaChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelDeltaBarChartProducer;
+import de.dengot.skyrim.reporting.table.Table;
+import de.dengot.skyrim.reporting.table.TableRow;
 import de.dengot.skyrim.reporting.worker.ChartProductionWorker;
-import de.dengot.skyrim.reporting.worker.TemplateMergePayload;
 import de.dengot.skyrim.reporting.worker.TemplateMergeWorker;
+import de.dengot.skyrim.reporting.worker.TemplateMergeWorkload;
 
-public class MultiThreadedCharacterReportGenerator {
+public class MultiThreadedCharacterReportGenerator extends CharacterReportGenerator {
+
+    private static final XLogger LOGGER =
+            XLoggerFactory.getXLogger(MultiThreadedCharacterReportGenerator.class);
 
     private VelocityEngine velocity;
     private StatisticCategoryProvider statCatProvider;
@@ -56,7 +63,7 @@ public class MultiThreadedCharacterReportGenerator {
         return velocity.getTemplate("/de/dengot/skyrim/template/" + filename);
     }
 
-    private void copyFileToOutput(String filename) throws IOException {
+    private void copyToOutputFolder(String filename) throws IOException {
         IOUtils.copy(getClass().getResourceAsStream("/de/dengot/skyrim/template/" + filename),
                 new FileOutputStream(new File(outputFolder, filename)));
     }
@@ -70,9 +77,10 @@ public class MultiThreadedCharacterReportGenerator {
             }
 
             // copy files untouched
-            copyFileToOutput("index.html");
-            copyFileToOutput("sca-styles.css");
-            
+            copyToOutputFolder("index.html");
+            copyToOutputFolder("sca-styles.css");
+            copyToOutputFolder("star_yellow.gif");
+
             writeMainSummaryFrame(characters);
             writeMainSummaryCharts(characters);
 
@@ -99,7 +107,7 @@ public class MultiThreadedCharacterReportGenerator {
                 templateWorker.enqueue(createCategorySummaryFramePayload(category));
 
                 for (String statName : category.getStatNames()) {
-                    TemplateMergePayload statsPagePaylod =
+                    TemplateMergeWorkload statsPagePaylod =
                             createStatsPagePayload(statName, characters);
                     templateWorker.enqueue(statsPagePaylod);
                 }
@@ -114,9 +122,9 @@ public class MultiThreadedCharacterReportGenerator {
             }
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOGGER.catching(e);
         } catch (InterruptedException ie) {
-            throw new RuntimeException(ie);
+            LOGGER.catching(ie);
         }
     }
 
@@ -160,32 +168,32 @@ public class MultiThreadedCharacterReportGenerator {
         writer.close();
     }
 
-    private TemplateMergePayload createStatNamesFramePayload(StatisticCategory category)
+    private TemplateMergeWorkload createStatNamesFramePayload(StatisticCategory category)
             throws IOException {
         Template template = loadTemplate("frame-category-content.vm");
         VelocityContext context = new VelocityContext();
         context.put("statNames", category.getStatNames());
         File outputFile = new File(this.outputFolder, "frame-" + category.getName() + ".html");
-        return new TemplateMergePayload(template, context, outputFile);
+        return new TemplateMergeWorkload(template, context, outputFile);
     }
 
-    private TemplateMergePayload createStatsPagePayload(String statName,
+    private TemplateMergeWorkload createStatsPagePayload(String statName,
             SkyrimCharacterList characters) throws IOException {
         VelocityContext context = new VelocityContext();
         context.put("statName", statName);
         context.put("playerMaxValueTable", createStatsTable(statName, characters));
         File outputFile = new File(this.outputFolder, statName + ".html");
-        return new TemplateMergePayload(statsPageTemplate, context, outputFile);
+        return new TemplateMergeWorkload(statsPageTemplate, context, outputFile);
     }
 
-    private TemplateMergePayload createCategorySummaryFramePayload(StatisticCategory category) {
+    private TemplateMergeWorkload createCategorySummaryFramePayload(StatisticCategory category) {
         Template template = loadTemplate("category-summarypage.vm");
         VelocityContext context = new VelocityContext();
         context.put("cat", category);
         // TODO add table
         File outputFile =
                 new File(this.outputFolder, "frame-summary-" + category.getName() + ".html");
-        return new TemplateMergePayload(template, context, outputFile);
+        return new TemplateMergeWorkload(template, context, outputFile);
     }
 
     private Table<Integer> createStatsTable(String statName, SkyrimCharacterList characters) {
@@ -195,11 +203,11 @@ public class MultiThreadedCharacterReportGenerator {
             table.addColumn(skyrimCharacter.getName());
         }
 
-        Map<String, Integer> newRow = table.newRow();
+        TableRow<Integer> newRow = table.newRow();
 
         for (SkyrimCharacter skyrimCharacter : characters) {
             int maxVal = skyrimCharacter.getMaxValue(statName);
-            newRow.put(skyrimCharacter.getName(), maxVal);
+            newRow.setCell(skyrimCharacter.getName(), maxVal);
         }
         return table;
     }
@@ -209,13 +217,32 @@ public class MultiThreadedCharacterReportGenerator {
         String filename = MessageFormat.format("{0}.png", chartName);
         File file = new File(this.outputFolder, filename);
 
-        System.out.println("Writing " + file.getPath());
+        LOGGER.trace("Writing " + file.getPath());
 
         chartWriter.writeChart(chart, 1400, 800, file);
     }
 
     private Table<String> createMainSummaryTable(SkyrimCharacterList characters) {
+
         Table<String> table = new Table<String>();
+
+        Comparator<String> cellValueComparator = new Comparator<String>() {
+            public int compare(String s1, String s2) {
+                int thisVal = Integer.MIN_VALUE;
+                int anotherVal = Integer.MIN_VALUE;
+                try {
+                    thisVal = Integer.parseInt(s1);
+                } catch (NumberFormatException e) {
+                }
+
+                try {
+                    anotherVal = Integer.parseInt(s2);
+                } catch (NumberFormatException e) {
+                }
+
+                return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
+            }
+        };
 
         table.addColumn("Statistic");
         for (SkyrimCharacter skyrimCharacter : characters) {
@@ -227,15 +254,35 @@ public class MultiThreadedCharacterReportGenerator {
         for (StatisticCategory category : categories) {
             for (String statName : category.getStatNames()) {
 
-                Map<String, String> newRow = table.newRow();
-                newRow.put("Statistic", statName);
+                TableRow<String> newRow = new TableRow<String>(cellValueComparator);
+                table.addRow(newRow);
+                newRow.setCell("Statistic", statName);
 
                 for (SkyrimCharacter skyrimCharacter : characters) {
                     int maxVal = skyrimCharacter.getMaxValue(statName);
-                    newRow.put(skyrimCharacter.getName(), String.valueOf(maxVal));
+                    newRow.setCell(skyrimCharacter.getName(), String.valueOf(maxVal));
                 }
             }
         }
+
+        // write sum values in footer
+        TableRow<String> footer = table.createFooter();
+        footer.setCell("Statistic", "Leads");
+        for (TableRow<String> row : table.getRows()) {
+            for (String column : table.getColumns()) {
+                if (row.isMaxValue(column)) {
+                    String cell = footer.getCell(column);
+                    int starCounter = 1;
+                    try {
+                        starCounter += Integer.parseInt(cell);
+                    } catch (NumberFormatException e) {
+
+                    }
+                    footer.setCell(column, String.valueOf(starCounter));
+                }
+            }
+        }
+
         return table;
     }
 

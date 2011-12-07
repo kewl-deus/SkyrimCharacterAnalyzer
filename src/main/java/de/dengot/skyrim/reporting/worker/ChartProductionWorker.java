@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.jfree.chart.JFreeChart;
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
 
 import de.dengot.skyrim.io.ChartWriter;
 import de.dengot.skyrim.io.PngChartWriter;
@@ -14,6 +16,8 @@ import de.dengot.skyrim.reporting.chart.CumulativeAreaChartProducer;
 import de.dengot.skyrim.reporting.chart.DeltaBarChartProducer;
 
 public class ChartProductionWorker implements Runnable {
+
+    private static final XLogger LOGGER = XLoggerFactory.getXLogger(ChartProductionWorker.class);
 
     private SkyrimCharacterList characters;
     private StatisticCategory statsCategory;
@@ -51,7 +55,7 @@ public class ChartProductionWorker implements Runnable {
         String filename = MessageFormat.format("{0} {1}.png", statName, chartName);
         File file = new File(this.outputFolder, filename);
         
-        System.out.println("Writing " + file.getPath());
+        LOGGER.trace("Writing " + file.getPath());
         
         chartWriter.writeChart(chart, 1400, 800, file);
     }

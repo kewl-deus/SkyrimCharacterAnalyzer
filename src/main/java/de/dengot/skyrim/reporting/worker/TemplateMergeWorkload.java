@@ -5,13 +5,13 @@ import java.io.File;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
-public class TemplateMergePayload {
+public class TemplateMergeWorkload {
 
     private Template template;
     private VelocityContext context;
     private File outputFile;
 
-    public TemplateMergePayload(Template template, VelocityContext context, File outputFile) {
+    public TemplateMergeWorkload(Template template, VelocityContext context, File outputFile) {
         super();
         this.template = template;
         this.context = context;

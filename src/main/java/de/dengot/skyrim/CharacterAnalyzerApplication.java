@@ -6,6 +6,7 @@ import java.io.IOException;
 import de.dengot.skyrim.io.SkyrimCharacterSerializer;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.reporting.CharacterReportGenerator;
+import de.dengot.skyrim.reporting.MultiThreadedCharacterReportGenerator;
 
 public class CharacterAnalyzerApplication {
 
@@ -18,7 +19,7 @@ public class CharacterAnalyzerApplication {
 		SkyrimCharacterSerializer serializer = new SkyrimCharacterSerializer();
 		SkyrimCharacterList characters = serializer.read(reader);
 
-		CharacterReportGenerator repoGen = new CharacterReportGenerator();
+		CharacterReportGenerator repoGen = new MultiThreadedCharacterReportGenerator();
         repoGen.createReport(characters, outputFolder);
 	}
 }
