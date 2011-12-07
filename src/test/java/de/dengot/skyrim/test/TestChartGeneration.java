@@ -13,15 +13,12 @@ import de.dengot.skyrim.io.ChartWriter;
 import de.dengot.skyrim.io.PngChartWriter;
 import de.dengot.skyrim.io.SkyrimCharacterSerializer;
 import de.dengot.skyrim.model.SkyrimCharacterList;
+import de.dengot.skyrim.model.StatisticCategory;
 import de.dengot.skyrim.model.StatisticCategoryProvider;
 import de.dengot.skyrim.model.queryoptimized.QueryOptimizedModelFactory;
 import de.dengot.skyrim.reporting.chart.CategoryBarChartProducer;
+import de.dengot.skyrim.reporting.chart.CategorySplittedBarChartProducer;
 import de.dengot.skyrim.reporting.chart.ChartProducer;
-import de.dengot.skyrim.reporting.chart.CumulativeAreaChartProducer;
-import de.dengot.skyrim.reporting.chart.DeltaBarChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelBarChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelCumulativeAreaChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelDeltaBarChartProducer;
 
 public class TestChartGeneration {
 
@@ -39,15 +36,19 @@ public class TestChartGeneration {
 
     @Test
     public void testChartProduction() throws IOException {
+        
+        for (StatisticCategory cat : StatisticCategoryProvider.getProvider().getCategories()) {
+            writeChart(new CategorySplittedBarChartProducer(cat), "CategorySplittedBarChart-" + cat.getName());
+            writeChart(new CategoryBarChartProducer(cat), "CategoryBarChart-" + cat.getName());            
+        }
+        
         String statName = "Chests Looted";
-        writeChart(new CumulativeAreaChartProducer(statName, false), "CumulativeAreaChart");
-        writeChart(new CumulativeAreaChartProducer(statName, true), "NormalizedCumulativeAreaChart");
-        writeChart(new DeltaBarChartProducer(statName), "DeltaBarChart");
-        writeChart(new CategoryBarChartProducer(StatisticCategoryProvider.getProvider()
-                .getCategory("General")), "CategoryBarChart");
-        writeChart(new LevelBarChartProducer(), "LevelBarChart");
-        writeChart(new LevelCumulativeAreaChartProducer(), "LevelCumulativeAreaChart");
-        writeChart(new LevelDeltaBarChartProducer(), "LevelDeltaBarChart");
+//        writeChart(new CumulativeAreaChartProducer(statName, false), "CumulativeAreaChart");
+//        writeChart(new CumulativeAreaChartProducer(statName, true), "NormalizedCumulativeAreaChart");
+//        writeChart(new DeltaBarChartProducer(statName), "DeltaBarChart");
+//        writeChart(new LevelBarChartProducer(), "LevelBarChart");
+//        writeChart(new LevelCumulativeAreaChartProducer(), "LevelCumulativeAreaChart");
+//        writeChart(new LevelDeltaBarChartProducer(), "LevelDeltaBarChart");
 
     }
 

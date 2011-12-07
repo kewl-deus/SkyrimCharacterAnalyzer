@@ -10,16 +10,17 @@ import de.dengot.skyrim.reporting.MultiThreadedCharacterReportGenerator;
 
 public class CharacterAnalyzerApplication {
 
-	public static void main(String[] args) throws IOException {
-		String inputXmlFileLocation = args[0];
-		String outputFolder = args[1];
-		
-		FileReader reader = new FileReader(inputXmlFileLocation);
+    public static void main(String[] args) throws IOException {
+        String inputXmlFileLocation = args[0];
+        String outputFolder = args[1];
 
-		SkyrimCharacterSerializer serializer = new SkyrimCharacterSerializer();
-		SkyrimCharacterList characters = serializer.read(reader);
+        FileReader reader = new FileReader(inputXmlFileLocation);
 
-		CharacterReportGenerator repoGen = new MultiThreadedCharacterReportGenerator();
+        SkyrimCharacterSerializer serializer = new SkyrimCharacterSerializer();
+        SkyrimCharacterList characters = serializer.read(reader);
+
+        CharacterReportGenerator repoGen = new MultiThreadedCharacterReportGenerator();
         repoGen.createReport(characters, outputFolder);
-	}
+    }
+
 }

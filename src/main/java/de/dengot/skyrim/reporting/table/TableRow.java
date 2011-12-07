@@ -35,6 +35,12 @@ public class TableRow<T> {
     }
 
     public boolean isMaxValue(String column) {
-        return getMaxValue().equals(getCell(column));
+        T maxVal = getMaxValue();
+        int occurences = getValueOccurence(maxVal);
+        return occurences == 1 && maxVal.equals(getCell(column));
+    }
+    
+    protected int getValueOccurence(T value){
+        return Collections.frequency(this.rowdata.values(), value);
     }
 }

@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -251,18 +252,25 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 
         Set<StatisticCategory> categories = StatisticCategoryProvider.getProvider().getCategories();
 
+        List<String> allStatNames = new ArrayList<String>();
         for (StatisticCategory category : categories) {
             for (String statName : category.getStatNames()) {
-
-                TableRow<String> newRow = new TableRow<String>(cellValueComparator);
-                table.addRow(newRow);
-                newRow.setCell("Statistic", statName);
-
-                for (SkyrimCharacter skyrimCharacter : characters) {
-                    int maxVal = skyrimCharacter.getMaxValue(statName);
-                    newRow.setCell(skyrimCharacter.getName(), String.valueOf(maxVal));
-                }
+                allStatNames.add(statName);
             }
+        }
+        
+        Collections.sort(allStatNames);
+        
+        for (String statName : allStatNames) {
+            TableRow<String> newRow = new TableRow<String>(cellValueComparator);
+            table.addRow(newRow);
+            newRow.setCell("Statistic", statName);
+
+            for (SkyrimCharacter skyrimCharacter : characters) {
+                int maxVal = skyrimCharacter.getMaxValue(statName);
+                newRow.setCell(skyrimCharacter.getName(), String.valueOf(maxVal));
+            }
+
         }
 
         // write sum values in footer
