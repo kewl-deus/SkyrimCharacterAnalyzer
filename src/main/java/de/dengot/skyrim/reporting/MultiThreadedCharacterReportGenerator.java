@@ -10,8 +10,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -48,7 +50,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
     private StatisticCategoryProvider statCatProvider;
     private File outputFolder;
 
-    private Template statsPageTemplate;
+    private Map<String, Template> templates;
 
     public MultiThreadedCharacterReportGenerator() {
         velocity = new VelocityEngine();
@@ -58,12 +60,17 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         velocity.init();
 
         statCatProvider = StatisticCategoryProvider.getProvider();
-
-        statsPageTemplate = loadTemplate("statspage.vm");
+        
+        templates = new HashMap<String, Template>();
     }
 
-    private Template loadTemplate(String filename) {
-        return velocity.getTemplate("/de/dengot/skyrim/template/" + filename);
+    private synchronized Template loadTemplate(String filename) {
+        Template template = templates.get(filename);
+        if (template == null){
+            template = velocity.getTemplate("/de/dengot/skyrim/template/" + filename);
+            templates.put(filename, template);
+        }
+        return template;
     }
 
     private void copyToOutputFolder(String filename) throws IOException {
@@ -140,21 +147,17 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
     }
 
     private void writeCategoriesFrame() throws IOException {
-        Template template = loadTemplate("frame-categories.vm");
-
         VelocityContext context = new VelocityContext();
 
         context.put("categories", statCatProvider.getCategories());
 
         FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-categories.html"));
-        template.merge(context, writer);
+        loadTemplate("frame-categories.vm").merge(context, writer);
         writer.flush();
         writer.close();
     }
 
     private void writeAllStatNamesFrame() throws IOException {
-        Template template = loadTemplate("frame-category-content.vm");
-
         VelocityContext context = new VelocityContext();
 
         Set<StatisticCategory> categories = statCatProvider.getCategories();
@@ -163,21 +166,21 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
             allStatNames.addAll(category.getStatNames());
         }
 
+        Collections.sort(allStatNames);
         context.put("statNames", allStatNames);
 
         FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-statnames.html"));
-        template.merge(context, writer);
+        loadTemplate("frame-category-content.vm").merge(context, writer);
         writer.flush();
         writer.close();
     }
 
     private TemplateMergeWorkload createStatNamesFramePayload(StatisticCategory category)
             throws IOException {
-        Template template = loadTemplate("frame-category-content.vm");
         VelocityContext context = new VelocityContext();
         context.put("statNames", category.getStatNames());
         File outputFile = new File(this.outputFolder, "frame-" + category.getName() + ".html");
-        return new TemplateMergeWorkload(template, context, outputFile);
+        return new TemplateMergeWorkload(loadTemplate("frame-category-content.vm"), context, outputFile);
     }
 
     private TemplateMergeWorkload createStatsPagePayload(String statName,
@@ -186,12 +189,11 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         context.put("statName", statName);
         context.put("playerMaxValueTable", createStatsTable(statName, characters));
         File outputFile = new File(this.outputFolder, statName + ".html");
-        return new TemplateMergeWorkload(statsPageTemplate, context, outputFile);
+        return new TemplateMergeWorkload(loadTemplate("statspage.vm"), context, outputFile);
     }
 
     private TemplateMergeWorkload createCategorySummaryFramePayload(StatisticCategory category,
             SkyrimCharacterList characters) {
-        Template template = loadTemplate("category-summarypage.vm");
         VelocityContext context = new VelocityContext();
 
         context.put("cat", category);
@@ -200,7 +202,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 
         File outputFile =
                 new File(this.outputFolder, "frame-summary-" + category.getName() + ".html");
-        return new TemplateMergeWorkload(template, context, outputFile);
+        return new TemplateMergeWorkload(loadTemplate("category-summarypage.vm"), context, outputFile);
     }
 
     private Table<Integer> createStatsTable(String statName, SkyrimCharacterList characters) {
@@ -305,15 +307,13 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
     }
 
     private void writeMainSummaryFrame(SkyrimCharacterList characters) throws IOException {
-        Template template = loadTemplate("frame-summary.vm");
-
         VelocityContext context = new VelocityContext();
 
         context.put("playerMaxValueTable", createSummaryTable(characters, statCatProvider
                 .getCategories()));
 
         FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-summary.html"));
-        template.merge(context, writer);
+        loadTemplate("frame-summary.vm").merge(context, writer);
         writer.flush();
         writer.close();
     }
