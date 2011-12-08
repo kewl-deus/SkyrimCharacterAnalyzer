@@ -11,10 +11,20 @@ public class TableRow<T> {
 
     private Map<String, T> rowdata;
     private Comparator<T> comparator;
+    private T defaulCellValue;
 
     public TableRow(Comparator<T> comparator) {
         this.rowdata = new HashMap<String, T>();
         this.comparator = comparator;
+        this.defaulCellValue = null;
+    }
+
+    public void setDefaulCellValue(T defaulCellValue) {
+        this.defaulCellValue = defaulCellValue;
+    }
+
+    public T getDefaulCellValue() {
+        return defaulCellValue;
     }
 
     @SuppressWarnings("unchecked")
@@ -23,7 +33,8 @@ public class TableRow<T> {
     }
 
     public T getCell(String column) {
-        return this.rowdata.get(column);
+        T val = this.rowdata.get(column);
+        return (val == null) ? getDefaulCellValue() : val;
     }
 
     public void setCell(String column, T value) {
@@ -31,7 +42,8 @@ public class TableRow<T> {
     }
 
     public T getMaxValue() {
-        return Collections.max(this.rowdata.values(), this.comparator);
+        T val = Collections.max(this.rowdata.values(), this.comparator);
+        return (val == null) ? getDefaulCellValue() : val;
     }
 
     public boolean isMaxValue(String column) {
@@ -39,8 +51,8 @@ public class TableRow<T> {
         int occurences = getValueOccurence(maxVal);
         return occurences == 1 && maxVal.equals(getCell(column));
     }
-    
-    protected int getValueOccurence(T value){
+
+    protected int getValueOccurence(T value) {
         return Collections.frequency(this.rowdata.values(), value);
     }
 }

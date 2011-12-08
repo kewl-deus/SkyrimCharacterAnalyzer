@@ -61,8 +61,8 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
         Histogram histogram = createHistogram(characters, dataset.getColumnCount() * 10);
         LOGGER.trace("--------- Histogram --------------");
         for (HistogramBin hbin : histogram) {
-            LOGGER.trace("HistogramBin[{} -> {}] contains {} values", new Object[] { hbin.getStartBoundary(),
-                    hbin.getEndBoundary(), hbin.getCount() });
+            LOGGER.trace("HistogramBin[{} -> {}] contains {} values", new Object[] {
+                    hbin.getStartBoundary(), hbin.getEndBoundary(), hbin.getCount() });
         }
 
         NumberAxis baseRangeAxis = (NumberAxis) basePlot.getRangeAxis();
@@ -71,11 +71,10 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
 
         NumberAxis topRangeAxis = (NumberAxis) topPlot.getRangeAxis();
         topRangeAxis.setLowerBound(histogram.getUpperBoundBin().getStartBoundary());
-        double buffer = 0.1 * rangeBounds.getUpperBound();
-        topRangeAxis.setUpperBound(rangeBounds.getUpperBound()); // + buffer
+        topRangeAxis.setUpperBound(rangeBounds.getUpperBound());
 
         JFreeChart combinedChart = new JFreeChart(statsCategory.getName(), combinedPlot);
-        
+
         CategoryAxis categoryaxis = combinedPlot.getDomainAxis();
         categoryaxis.setCategoryLabelPositions(CategoryLabelPositions
                 .createUpRotationLabelPositions(0.39269908169872414D));

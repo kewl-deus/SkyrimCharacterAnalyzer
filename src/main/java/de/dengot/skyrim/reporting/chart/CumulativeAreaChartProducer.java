@@ -1,9 +1,11 @@
 package de.dengot.skyrim.reporting.chart;
 
 import java.awt.Color;
+import java.text.NumberFormat;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.TextTitle;
@@ -59,13 +61,9 @@ public class CumulativeAreaChartProducer extends ChartProducer {
         XYPlot xyplot = (XYPlot) chart.getPlot();
         xyplot.setForegroundAlpha(0.65F);
 
-        /*
-         * ValueAxis valueaxis = xyplot.getDomainAxis();
-         * valueaxis.setTickMarkPaint(Color.black);
-         * valueaxis.setLowerMargin(0.0D); valueaxis.setUpperMargin(0.0D);
-         * ValueAxis valueaxis1 = xyplot.getRangeAxis();
-         * valueaxis1.setTickMarkPaint(Color.black);
-         */
+        XYPlot plot = (XYPlot) chart.getPlot();
+        NumberAxis numberaxis = (NumberAxis) plot.getRangeAxis();
+        numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
 
         return chart;
     }

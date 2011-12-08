@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -105,7 +107,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
                 threads.add(new Thread(templateWorker));
 
                 templateWorker.enqueue(createStatNamesFramePayload(category));
-                templateWorker.enqueue(createCategorySummaryFramePayload(category));
+                templateWorker.enqueue(createCategorySummaryFramePayload(category, characters));
 
                 for (String statName : category.getStatNames()) {
                     TemplateMergeWorkload statsPagePaylod =
@@ -187,11 +189,15 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         return new TemplateMergeWorkload(statsPageTemplate, context, outputFile);
     }
 
-    private TemplateMergeWorkload createCategorySummaryFramePayload(StatisticCategory category) {
+    private TemplateMergeWorkload createCategorySummaryFramePayload(StatisticCategory category,
+            SkyrimCharacterList characters) {
         Template template = loadTemplate("category-summarypage.vm");
         VelocityContext context = new VelocityContext();
+
         context.put("cat", category);
-        // TODO add table
+        context.put("playerMaxValueTable", createSummaryTable(characters, Collections
+                .singleton(category)));
+
         File outputFile =
                 new File(this.outputFolder, "frame-summary-" + category.getName() + ".html");
         return new TemplateMergeWorkload(template, context, outputFile);
@@ -205,6 +211,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         }
 
         TableRow<Integer> newRow = table.newRow();
+        newRow.setDefaulCellValue(0);
 
         for (SkyrimCharacter skyrimCharacter : characters) {
             int maxVal = skyrimCharacter.getMaxValue(statName);
@@ -223,22 +230,26 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         chartWriter.writeChart(chart, 1400, 800, file);
     }
 
-    private Table<String> createMainSummaryTable(SkyrimCharacterList characters) {
+    private Table<String> createSummaryTable(SkyrimCharacterList characters,
+            Set<StatisticCategory> categories) {
 
         Table<String> table = new Table<String>();
+        
+        final NumberFormat integerFormat = NumberFormat.getIntegerInstance();
 
         Comparator<String> cellValueComparator = new Comparator<String>() {
             public int compare(String s1, String s2) {
                 int thisVal = Integer.MIN_VALUE;
                 int anotherVal = Integer.MIN_VALUE;
+                
                 try {
-                    thisVal = Integer.parseInt(s1);
-                } catch (NumberFormatException e) {
+                    thisVal = integerFormat.parse(s1).intValue();
+                } catch (ParseException e) {
                 }
 
                 try {
-                    anotherVal = Integer.parseInt(s2);
-                } catch (NumberFormatException e) {
+                    anotherVal = integerFormat.parse(s2).intValue();
+                } catch (ParseException e) {
                 }
 
                 return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
@@ -250,31 +261,30 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
             table.addColumn(skyrimCharacter.getName());
         }
 
-        Set<StatisticCategory> categories = StatisticCategoryProvider.getProvider().getCategories();
-
         List<String> allStatNames = new ArrayList<String>();
         for (StatisticCategory category : categories) {
             for (String statName : category.getStatNames()) {
                 allStatNames.add(statName);
             }
         }
-        
+
         Collections.sort(allStatNames);
-        
         for (String statName : allStatNames) {
             TableRow<String> newRow = new TableRow<String>(cellValueComparator);
+            newRow.setDefaulCellValue("0");
             table.addRow(newRow);
             newRow.setCell("Statistic", statName);
 
             for (SkyrimCharacter skyrimCharacter : characters) {
                 int maxVal = skyrimCharacter.getMaxValue(statName);
-                newRow.setCell(skyrimCharacter.getName(), String.valueOf(maxVal));
+                newRow.setCell(skyrimCharacter.getName(), integerFormat.format(maxVal));
             }
 
         }
 
         // write sum values in footer
         TableRow<String> footer = table.createFooter();
+        footer.setDefaulCellValue("0");
         footer.setCell("Statistic", "Leads");
         for (TableRow<String> row : table.getRows()) {
             for (String column : table.getColumns()) {
@@ -299,7 +309,8 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 
         VelocityContext context = new VelocityContext();
 
-        context.put("playerMaxValueTable", createMainSummaryTable(characters));
+        context.put("playerMaxValueTable", createSummaryTable(characters, statCatProvider
+                .getCategories()));
 
         FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-summary.html"));
         template.merge(context, writer);

@@ -20,5 +20,38 @@
 <img src="${cat.name} category-summarybar-chart.png" alt="${cat.name} cumulative-areachart" />
 </p>
 
+<h3>Cumulated values per character</h3>
+<table class="log" border="0" cellpadding="5" cellspacing="2" width="100%">
+<thead>
+<tr>
+    #foreach( $column in $playerMaxValueTable.columns )
+        <th>$column</th>
+    #end
+</tr>
+</thead>
+<tbody>
+#foreach( $row in $playerMaxValueTable.rows )
+    <tr class="a">
+    #foreach( $column in $playerMaxValueTable.columns )
+        <td>$row.getCell($column)
+        #if ($row.isMaxValue($column))
+            <img src="star_yellow.gif" />
+        #end
+        </td>
+    #end
+    </tr>
+#end
+</tbody>
+<tfoot>
+<tr>
+    #foreach( $column in $playerMaxValueTable.columns )
+        <th>
+        $playerMaxValueTable.footer.getCell($column)
+        </th>
+    #end
+</tr>
+</tfoot>
+</table>
+
 </body>
 </html>

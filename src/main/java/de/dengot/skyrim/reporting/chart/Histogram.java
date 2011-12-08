@@ -22,8 +22,7 @@ public class Histogram implements Iterable<HistogramBin> {
             throw new IllegalArgumentException("The 'bins' value must be at least 1.");
         }
         histogramBins =
-                new LinkedList<HistogramBin>(createHistogramBins("histgram", values, bins, minimum,
-                        maximum));
+                new LinkedList<HistogramBin>(createHistogramBins(values, bins, minimum, maximum));
     }
 
     public HistogramBin getMostFrequencyBin() {
@@ -53,8 +52,8 @@ public class Histogram implements Iterable<HistogramBin> {
         return this.histogramBins.getLast();
     }
 
-    private List<HistogramBin> createHistogramBins(Comparable key, double[] values, int bins,
-            double minimum, double maximum) {
+    private List<HistogramBin> createHistogramBins(double[] values, int bins, double minimum,
+            double maximum) {
 
         double binWidth = (maximum - minimum) / bins;
 
