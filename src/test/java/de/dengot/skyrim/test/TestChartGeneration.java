@@ -24,6 +24,7 @@ public class TestChartGeneration {
 
     private SkyrimCharacterList sampleCharacters;
 
+    @SuppressWarnings("unused")
     @BeforeTest
     private void loadSampleCharacters() {
         InputStream input = getClass().getResourceAsStream("/skyrimcharacters.xml");

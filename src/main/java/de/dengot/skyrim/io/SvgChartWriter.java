@@ -15,6 +15,11 @@ import org.w3c.dom.Document;
 public class SvgChartWriter extends ChartWriter{
 
     @Override
+    public String getFilenameSuffix() {
+        return "svg";
+    }
+    
+    @Override
     public void writeChart(JFreeChart chart, int width, int height, OutputStream out) throws IOException {
 
         // Get a DOMImplementation and create an XML document

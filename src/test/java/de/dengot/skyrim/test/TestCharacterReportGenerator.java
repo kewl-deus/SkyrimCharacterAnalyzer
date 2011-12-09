@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import de.dengot.skyrim.io.PngChartWriter;
 import de.dengot.skyrim.io.SkyrimCharacterSerializer;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.queryoptimized.QueryOptimizedModelFactory;
@@ -13,31 +14,33 @@ import de.dengot.skyrim.reporting.MultiThreadedCharacterReportGenerator;
 
 public class TestCharacterReportGenerator {
 
-	private SkyrimCharacterList sampleCharacters;
+    private SkyrimCharacterList sampleCharacters;
 
-	@BeforeTest
-	private void loadSampleCharacters() {
-		InputStream input = getClass().getResourceAsStream("/skyrimcharacters.xml");
-		InputStreamReader reader = new InputStreamReader(input);
+    @SuppressWarnings("unused")
+    @BeforeTest
+    private void loadSampleCharacters() {
+        InputStream input = getClass().getResourceAsStream("/skyrimcharacters.xml");
+        InputStreamReader reader = new InputStreamReader(input);
 
-		SkyrimCharacterSerializer serializer = new SkyrimCharacterSerializer();
-		SkyrimCharacterList charList = serializer.read(reader);
-		this.sampleCharacters = new QueryOptimizedModelFactory().createQueryOptimized(charList);
-	}
+        SkyrimCharacterSerializer serializer = new SkyrimCharacterSerializer();
+        SkyrimCharacterList charList = serializer.read(reader);
+        this.sampleCharacters = new QueryOptimizedModelFactory().createQueryOptimized(charList);
+    }
 
-	@Test
-	public void testReportGeneration() {
-		long start = System.currentTimeMillis();
+    @Test
+    public void testReportGeneration() {
+        long start = System.currentTimeMillis();
 
-		MultiThreadedCharacterReportGenerator mtRepoGen = new MultiThreadedCharacterReportGenerator();
-		mtRepoGen.createReport(sampleCharacters, "c:/temp/skyrimreport");
-		// duration: 58s dualcore / 24s quadcore
+        MultiThreadedCharacterReportGenerator mtRepoGen =
+                new MultiThreadedCharacterReportGenerator(new PngChartWriter());
+        mtRepoGen.createReport(sampleCharacters, "c:/temp/skyrimreport");
+        // duration: 58s dualcore / 24s quadcore
 
-		long finish = System.currentTimeMillis();
-		long duration = finish - start;
-		float floatDuration = duration / 1000;
+        long finish = System.currentTimeMillis();
+        long duration = finish - start;
+        float floatDuration = duration / 1000;
 
-		System.out.println("Report Generation took: " + floatDuration + " secs");
-	}
+        System.out.println("Report Generation took: " + floatDuration + " secs");
+    }
 
 }

@@ -1,10 +1,11 @@
 package de.dengot.skyrim.reporting;
 
+import static java.text.MessageFormat.format;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -26,18 +26,20 @@ import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
 import de.dengot.skyrim.io.ChartWriter;
-import de.dengot.skyrim.io.PngChartWriter;
 import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.StatisticCategory;
 import de.dengot.skyrim.model.StatisticCategoryProvider;
 import de.dengot.skyrim.reporting.chart.CategoryBarChartProducer;
+import de.dengot.skyrim.reporting.chart.CumulativeAreaChartProducer;
+import de.dengot.skyrim.reporting.chart.DeltaBarChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelBarChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelCumulativeAreaChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelDeltaBarChartProducer;
 import de.dengot.skyrim.reporting.table.Table;
 import de.dengot.skyrim.reporting.table.TableRow;
 import de.dengot.skyrim.reporting.worker.ChartProductionWorker;
+import de.dengot.skyrim.reporting.worker.ChartProductionWorkload;
 import de.dengot.skyrim.reporting.worker.TemplateMergeWorker;
 import de.dengot.skyrim.reporting.worker.TemplateMergeWorkload;
 
@@ -46,27 +48,34 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
     private static final XLogger LOGGER =
             XLoggerFactory.getXLogger(MultiThreadedCharacterReportGenerator.class);
 
+    private static final int CHART_WIDTH = 1400;
+    private static final int CHART_HEIGHT = 800;
+
     private VelocityEngine velocity;
     private StatisticCategoryProvider statCatProvider;
     private File outputFolder;
+    private ChartWriter chartWriter;
 
     private Map<String, Template> templates;
 
-    public MultiThreadedCharacterReportGenerator() {
-        velocity = new VelocityEngine();
-        velocity.setProperty("resource.loader", "class");
-        velocity.setProperty("class.resource.loader.class",
-                "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-        velocity.init();
+    public MultiThreadedCharacterReportGenerator(ChartWriter chartWriter) {
+        this.chartWriter = chartWriter;
 
-        statCatProvider = StatisticCategoryProvider.getProvider();
-        
-        templates = new HashMap<String, Template>();
+        this.velocity = new VelocityEngine();
+        this.velocity.setProperty("resource.loader", "class");
+        this.velocity.setProperty("class.resource.loader.class",
+                "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        this.velocity.init();
+
+        this.statCatProvider = StatisticCategoryProvider.getProvider();
+
+        this.templates = new HashMap<String, Template>();
+
     }
 
     private synchronized Template loadTemplate(String filename) {
         Template template = templates.get(filename);
-        if (template == null){
+        if (template == null) {
             template = velocity.getTemplate("/de/dengot/skyrim/template/" + filename);
             templates.put(filename, template);
         }
@@ -97,39 +106,30 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
             writeCategoriesFrame();
             writeAllStatNamesFrame();
 
-            Queue<Thread> threads = new LinkedList<Thread>();
+            // collect workload
+            List<ChartProductionWorkload> chartWorkloads =
+                    new LinkedList<ChartProductionWorkload>();
+            List<TemplateMergeWorkload> pageWorkloads = new LinkedList<TemplateMergeWorkload>();
 
-            Set<StatisticCategory> categories =
-                    StatisticCategoryProvider.getProvider().getCategories();
-
+            Set<StatisticCategory> categories = statCatProvider.getCategories();
             for (StatisticCategory category : categories) {
 
                 writeCategorySummaryChart(category, characters);
 
-                ChartProductionWorker chartWorker =
-                        new ChartProductionWorker(characters, category, outputFolder);
-                threads.add(new Thread(chartWorker));
-
-                TemplateMergeWorker templateWorker = new TemplateMergeWorker();
-                threads.add(new Thread(templateWorker));
-
-                templateWorker.enqueue(createStatNamesFramePayload(category));
-                templateWorker.enqueue(createCategorySummaryFramePayload(category, characters));
+                chartWorkloads.addAll(createCategoryChartsWorkload(category, characters));
+                pageWorkloads.add(createStatNamesFrameWorkload(category));
+                pageWorkloads.add(createCategorySummaryFrameWorkload(category, characters));
 
                 for (String statName : category.getStatNames()) {
-                    TemplateMergeWorkload statsPagePaylod =
-                            createStatsPagePayload(statName, characters);
-                    templateWorker.enqueue(statsPagePaylod);
+                    TemplateMergeWorkload statsPageWorload =
+                            createStatsPageWorkload(statName, characters);
+                    pageWorkloads.add(statsPageWorload);
                 }
             }
 
-            for (Thread thread : threads) {
-                thread.start();
-            }
-
-            for (Thread thread : threads) {
-                thread.join();
-            }
+            // process workload
+            processChartWorkload(8, chartWorkloads);
+            processPageWorkload(8, pageWorkloads);
 
         } catch (IOException e) {
             LOGGER.catching(e);
@@ -138,12 +138,85 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         }
     }
 
+    private void processChartWorkload(int threadCount, List<ChartProductionWorkload> chartWorkloads)
+            throws InterruptedException {
+
+        ChartProductionWorker[] workers = new ChartProductionWorker[threadCount];
+        for (int i = 0; i < chartWorkloads.size(); i++) {
+            int workerNo = i % threadCount;
+            ChartProductionWorker worker = workers[workerNo];
+            if (worker == null) {
+                worker = new ChartProductionWorker();
+                workers[workerNo] = worker;
+            }
+            worker.enqueue(chartWorkloads.get(i));
+        }
+
+        processParallel(workers);
+    }
+
+    private void processPageWorkload(int threadCount, List<TemplateMergeWorkload> pageWorkload)
+            throws InterruptedException {
+
+        TemplateMergeWorker[] workers = new TemplateMergeWorker[threadCount];
+        for (int i = 0; i < pageWorkload.size(); i++) {
+            int workerNo = i % threadCount;
+            TemplateMergeWorker worker = workers[workerNo];
+            if (worker == null) {
+                worker = new TemplateMergeWorker();
+                workers[workerNo] = worker;
+            }
+            worker.enqueue(pageWorkload.get(i));
+        }
+        processParallel(workers);
+
+    }
+
+    private void processParallel(Runnable... workers) throws InterruptedException {
+        List<Thread> threads = new LinkedList<Thread>();
+        for (Runnable worker : workers) {
+            Thread thread = new Thread(worker);
+            threads.add(thread);
+            thread.start();
+        }
+        for (Thread thread : threads) {
+            thread.join();
+        }
+    }
+
+    private List<ChartProductionWorkload> createCategoryChartsWorkload(
+            StatisticCategory statsCategory, SkyrimCharacterList characters) {
+
+        List<ChartProductionWorkload> workloadList = new ArrayList<ChartProductionWorkload>();
+
+        for (String statName : statsCategory.getStatNames()) {
+
+            String filenameCumulAreaChart =
+                    this.chartWriter.suffixFilename(format("{0} {1}", statName,
+                            "cumulative-areachart"));
+            ChartProductionWorkload workloadCumulAreaChart =
+                    new ChartProductionWorkload(new CumulativeAreaChartProducer(statName),
+                            this.chartWriter, new File(this.outputFolder, filenameCumulAreaChart),
+                            characters, CHART_WIDTH, CHART_HEIGHT);
+            workloadList.add(workloadCumulAreaChart);
+
+            String filenameDeltaBarChart =
+                    this.chartWriter.suffixFilename(format("{0} {1}", statName, "delta-barchart"));
+            ChartProductionWorkload workloadDeltaBarChart =
+                    new ChartProductionWorkload(new DeltaBarChartProducer(statName), chartWriter,
+                            new File(this.outputFolder, filenameDeltaBarChart), characters,
+                            CHART_WIDTH, CHART_HEIGHT);
+            workloadList.add(workloadDeltaBarChart);
+        }
+
+        return workloadList;
+    }
+
     private void writeCategorySummaryChart(StatisticCategory category,
             SkyrimCharacterList characters) throws IOException {
         CategoryBarChartProducer catBarProducer = new CategoryBarChartProducer(category);
         JFreeChart catSummaryBarChart = catBarProducer.createChart(characters);
-        writeChart(catSummaryBarChart, MessageFormat.format("{0} category-summarybar-chart",
-                category.getName()));
+        writeChart(catSummaryBarChart, format("{0} category-summarybar-chart", category.getName()));
     }
 
     private void writeCategoriesFrame() throws IOException {
@@ -175,15 +248,16 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         writer.close();
     }
 
-    private TemplateMergeWorkload createStatNamesFramePayload(StatisticCategory category)
+    private TemplateMergeWorkload createStatNamesFrameWorkload(StatisticCategory category)
             throws IOException {
         VelocityContext context = new VelocityContext();
         context.put("statNames", category.getStatNames());
         File outputFile = new File(this.outputFolder, "frame-" + category.getName() + ".html");
-        return new TemplateMergeWorkload(loadTemplate("frame-category-content.vm"), context, outputFile);
+        return new TemplateMergeWorkload(loadTemplate("frame-category-content.vm"), context,
+                outputFile);
     }
 
-    private TemplateMergeWorkload createStatsPagePayload(String statName,
+    private TemplateMergeWorkload createStatsPageWorkload(String statName,
             SkyrimCharacterList characters) throws IOException {
         VelocityContext context = new VelocityContext();
         context.put("statName", statName);
@@ -192,7 +266,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         return new TemplateMergeWorkload(loadTemplate("statspage.vm"), context, outputFile);
     }
 
-    private TemplateMergeWorkload createCategorySummaryFramePayload(StatisticCategory category,
+    private TemplateMergeWorkload createCategorySummaryFrameWorkload(StatisticCategory category,
             SkyrimCharacterList characters) {
         VelocityContext context = new VelocityContext();
 
@@ -202,7 +276,8 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 
         File outputFile =
                 new File(this.outputFolder, "frame-summary-" + category.getName() + ".html");
-        return new TemplateMergeWorkload(loadTemplate("category-summarypage.vm"), context, outputFile);
+        return new TemplateMergeWorkload(loadTemplate("category-summarypage.vm"), context,
+                outputFile);
     }
 
     private Table<Integer> createStatsTable(String statName, SkyrimCharacterList characters) {
@@ -223,27 +298,26 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
     }
 
     private void writeChart(JFreeChart chart, String chartName) throws IOException {
-        ChartWriter chartWriter = new PngChartWriter();
-        String filename = MessageFormat.format("{0}.png", chartName);
+        String filename = chartWriter.suffixFilename(chartName);
         File file = new File(this.outputFolder, filename);
 
         LOGGER.trace("Writing " + file.getPath());
 
-        chartWriter.writeChart(chart, 1400, 800, file);
+        chartWriter.writeChart(chart, CHART_WIDTH, CHART_HEIGHT, file);
     }
 
     private Table<String> createSummaryTable(SkyrimCharacterList characters,
             Set<StatisticCategory> categories) {
 
         Table<String> table = new Table<String>();
-        
+
         final NumberFormat integerFormat = NumberFormat.getIntegerInstance();
 
         Comparator<String> cellValueComparator = new Comparator<String>() {
             public int compare(String s1, String s2) {
                 int thisVal = Integer.MIN_VALUE;
                 int anotherVal = Integer.MIN_VALUE;
-                
+
                 try {
                     thisVal = integerFormat.parse(s1).intValue();
                 } catch (ParseException e) {

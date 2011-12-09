@@ -3,6 +3,7 @@ package de.dengot.skyrim;
 import java.io.FileReader;
 import java.io.IOException;
 
+import de.dengot.skyrim.io.PngChartWriter;
 import de.dengot.skyrim.io.SkyrimCharacterSerializer;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.reporting.CharacterReportGenerator;
@@ -19,7 +20,7 @@ public class CharacterAnalyzerApplication {
         SkyrimCharacterSerializer serializer = new SkyrimCharacterSerializer();
         SkyrimCharacterList characters = serializer.read(reader);
 
-        CharacterReportGenerator repoGen = new MultiThreadedCharacterReportGenerator();
+        CharacterReportGenerator repoGen = new MultiThreadedCharacterReportGenerator(new PngChartWriter());
         repoGen.createReport(characters, outputFolder);
     }
 

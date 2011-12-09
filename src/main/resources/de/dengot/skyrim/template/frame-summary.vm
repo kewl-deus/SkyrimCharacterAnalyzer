@@ -17,6 +17,9 @@
 <hr size="1">
 
 <p>
+<!-- embedding SVG
+<object data="level-barchart.svg" type="image/svg+xml" width="1400" height="800" class="svg_chart" />
+-->
 <img src="level-barchart.png" alt="level-barchart" />
 </p>
 <p>
