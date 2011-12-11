@@ -30,6 +30,7 @@ import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.StatisticCategory;
 import de.dengot.skyrim.model.StatisticCategoryProvider;
+import de.dengot.skyrim.model.XmlStatisticCategoryProvider;
 import de.dengot.skyrim.reporting.chart.CategoryBarChartProducer;
 import de.dengot.skyrim.reporting.chart.CumulativeAreaChartProducer;
 import de.dengot.skyrim.reporting.chart.DeltaBarChartProducer;
@@ -67,7 +68,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
                 "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         this.velocity.init();
 
-        this.statCatProvider = StatisticCategoryProvider.getProvider();
+        this.statCatProvider = new XmlStatisticCategoryProvider();
 
         this.templates = new HashMap<String, Template>();
 
@@ -121,7 +122,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
                 pageWorkloads.add(createStatNamesFrameWorkload(category));
                 pageWorkloads.add(createCategorySummaryFrameWorkload(category, characters));
 
-                for (String statName : category.getStatNames()) {
+                for (String statName : category.getLocalizedStatNames()) {
                     TemplateMergeWorkload statsPageWorload =
                             createStatsPageWorkload(statName, characters);
                     pageWorkloads.add(statsPageWorload);
@@ -190,7 +191,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 
         List<ChartProductionWorkload> workloadList = new ArrayList<ChartProductionWorkload>();
 
-        for (String statName : statsCategory.getStatNames()) {
+        for (String statName : statsCategory.getLocalizedStatNames()) {
 
             String filenameCumulAreaChart =
                     this.chartWriter.suffixFilename(format("{0} {1}", statName,
@@ -237,7 +238,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         Set<StatisticCategory> categories = statCatProvider.getCategories();
         List<String> allStatNames = new ArrayList<String>();
         for (StatisticCategory category : categories) {
-            allStatNames.addAll(category.getStatNames());
+            allStatNames.addAll(category.getLocalizedStatNames());
         }
 
         Collections.sort(allStatNames);
@@ -252,7 +253,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
     private TemplateMergeWorkload createStatNamesFrameWorkload(StatisticCategory category)
             throws IOException {
         VelocityContext context = new VelocityContext();
-        context.put("statNames", category.getStatNames());
+        context.put("statNames", category.getLocalizedStatNames());
         File outputFile = new File(this.outputFolder, "frame-" + category.getName() + ".html");
         return new TemplateMergeWorkload(loadTemplate("frame-category-content.vm"), context,
                 outputFile);
@@ -340,7 +341,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 
         List<String> allStatNames = new ArrayList<String>();
         for (StatisticCategory category : categories) {
-            for (String statName : category.getStatNames()) {
+            for (String statName : category.getLocalizedStatNames()) {
                 allStatNames.add(statName);
             }
         }

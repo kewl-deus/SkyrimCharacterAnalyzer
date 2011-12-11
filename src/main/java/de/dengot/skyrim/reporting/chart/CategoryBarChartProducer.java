@@ -71,7 +71,7 @@ public class CategoryBarChartProducer extends ChartProducer {
     protected CategoryDataset createDataset(SkyrimCharacterList characters) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (String statName : this.statsCategory.getStatNames()) {
+        for (String statName : this.statsCategory.getLocalizedStatNames()) {
             for (SkyrimCharacter skyrimCharacter : characters) {
                 int value = getCharacterValue(skyrimCharacter, statName);
                 dataset.addValue(value, skyrimCharacter.getName(), statName);

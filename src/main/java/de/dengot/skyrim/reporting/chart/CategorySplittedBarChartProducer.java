@@ -110,10 +110,10 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
     }
 
     protected Histogram createHistogram(SkyrimCharacterList characters, int binCount) {
-        double[] values = new double[this.statsCategory.getStatNames().size()];
+        double[] values = new double[this.statsCategory.getLocalizedStatNames().size()];
         double minimum = Integer.MAX_VALUE;
         double maximum = Integer.MIN_VALUE;
-        for (ListIterator<String> it = this.statsCategory.getStatNames().listIterator(); it
+        for (ListIterator<String> it = this.statsCategory.getLocalizedStatNames().listIterator(); it
                 .hasNext();) {
             String statName = it.next();
             double value = characters.getMaxValue(statName);
@@ -129,7 +129,7 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
     protected CategoryDataset createDataset(SkyrimCharacterList characters) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (String statName : this.statsCategory.getStatNames()) {
+        for (String statName : this.statsCategory.getLocalizedStatNames()) {
             for (SkyrimCharacter skyrimCharacter : characters) {
                 int value = getCharacterValue(skyrimCharacter, statName);
                 dataset.addValue(value, skyrimCharacter.getName(), statName);

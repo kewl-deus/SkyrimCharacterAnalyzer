@@ -1,0 +1,467 @@
+<CategorySet>
+	<Category TypeId="0">
+		<Name Key="General">
+			<Localization Lang="de" Text="Allgemeines" />
+			<Localization Lang="en" Text="General" />
+		</Name>
+		<StatisticSet>
+			<LocalizedLabel Key="Barters">
+				<Localization Lang="de" Text="Tauschgeschäfte" />
+				<Localization Lang="en" Text="Barters" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Books Read">
+				<Localization Lang="de" Text="Bücher gelesen" />
+				<Localization Lang="en" Text="Books Read" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Bribes">
+				<Localization Lang="de" Text="Bestechungen" />
+				<Localization Lang="en" Text="Bribes" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Chests Looted">
+				<Localization Lang="de" Text="Truhen geplündert" />
+				<Localization Lang="en" Text="Chests Looted" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Days Passed">
+				<Localization Lang="de" Text="Tage vergangen" />
+				<Localization Lang="en" Text="Days Passed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Days as a Vampire">
+				<Localization Lang="de" Text="Tage als Vampir" />
+				<Localization Lang="en" Text="Days as a Vampire" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Days as a Werewolf">
+				<Localization Lang="de" Text="Tage als Werwolf" />
+				<Localization Lang="en" Text="Days as a Werewolf" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Diseases Contracted">
+				<Localization Lang="de" Text="Krankheiten überstanden" />
+				<Localization Lang="en" Text="Diseases Contracted" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Dungeons Cleared">
+				<Localization Lang="de" Text="Verliese abgeschlossen" />
+				<Localization Lang="en" Text="Dungeons Cleared" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Food Eaten">
+				<Localization Lang="de" Text="Nahrungsmittel gegessen" />
+				<Localization Lang="en" Text="Food Eaten" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Gold Found">
+				<Localization Lang="de" Text="Gold gefunden" />
+				<Localization Lang="en" Text="Gold Found" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Horses Owned">
+				<Localization Lang="de" Text="Pferde besessen" />
+				<Localization Lang="en" Text="Horses Owned" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Hours Slept">
+				<Localization Lang="de" Text="Stunden geschlafen" />
+				<Localization Lang="en" Text="Hours Slept" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Hours Waiting">
+				<Localization Lang="de" Text="Stunden gewartet" />
+				<Localization Lang="en" Text="Hours Waiting" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Houses Owned">
+				<Localization Lang="de" Text="Häuser besessen" />
+				<Localization Lang="en" Text="Houses Owned" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Intimidations">
+				<Localization Lang="de" Text="Einschüchterungen" />
+				<Localization Lang="en" Text="Intimidations" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Locations Discovered">
+				<Localization Lang="de" Text="Orte entdeckt" />
+				<Localization Lang="en" Text="Locations Discovered" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Mauls">
+				<Localization Lang="de" Text="Fleisch gefressen" />
+				<Localization Lang="en" Text="Mauls" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Most Gold Carried">
+				<Localization Lang="de" Text="Meistes Gold besessen" />
+				<Localization Lang="en" Text="Most Gold Carried" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Necks Bitten">
+				<Localization Lang="de" Text="Hälse gebissen" />
+				<Localization Lang="en" Text="Necks Bitten" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Persuasions">
+				<Localization Lang="de" Text="Überredete Personen" />
+				<Localization Lang="en" Text="Persuasions" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Skill Books Read">
+				<Localization Lang="de" Text="Lehrbücher gelesen" />
+				<Localization Lang="en" Text="Skill Books Read" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Skill Increases">
+				<Localization Lang="de" Text="Fertigkeiten verbessert" />
+				<Localization Lang="en" Text="Skill Increases" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Standing Stones Found">
+				<Localization Lang="de" Text="Findlinge gefunden" />
+				<Localization Lang="en" Text="Standing Stones Found" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Stores Invested In">
+				<Localization Lang="de" Text="In Läden investiert" />
+				<Localization Lang="en" Text="Stores Invested In" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Training Sessions">
+				<Localization Lang="de" Text="Trainingseinheiten" />
+				<Localization Lang="en" Text="Training Sessions" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Vampirism Cures">
+				<Localization Lang="de" Text="Vampirismus Heilungen" />
+				<Localization Lang="en" Text="Vampirism Cures" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Werewolf Transformations">
+				<Localization Lang="de" Text="Werwolf Transformationen" />
+				<Localization Lang="en" Text="Werewolf Transformations" />
+			</LocalizedLabel>
+		</StatisticSet>
+	</Category>
+
+
+	<Category TypeId="1">
+		<Name Key="Quest">
+			<Localization Lang="de" Text="Quest" />
+			<Localization Lang="en" Text="Quest" />
+		</Name>
+		<StatisticSet>
+			<LocalizedLabel Key="Civil War Quests Completed">
+				<Localization Lang="de" Text="Bürgerkriegs-Quests abgeschlossen" />
+				<Localization Lang="en" Text="Civil War Quests Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="College of Winterhold Quests Completed">
+				<Localization Lang="de" Text="Akademie-von-Winterfeste-Quests abgeschlossen" />
+				<Localization Lang="en" Text="College of Winterhold Quests Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Daedric Quests Completed">
+				<Localization Lang="de" Text="Daedrische Quests abgeschlossen" />
+				<Localization Lang="en" Text="Daedric Quests Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Main Quests Completed">
+				<Localization Lang="de" Text="Hauptquests abgeschlossen" />
+				<Localization Lang="en" Text="Main Quests Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Misc Objectives Completed">
+				<Localization Lang="de" Text="Sonstige Ziele abgeschlossen" />
+				<Localization Lang="en" Text="Misc Objectives Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Questlines Completed">
+				<Localization Lang="de" Text="Questreihen abgeschlossen" />
+				<Localization Lang="en" Text="Questlines Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Quests Completed">
+				<Localization Lang="de" Text="Quests abgeschlossen" />
+				<Localization Lang="en" Text="Quests Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Side Quests Completed">
+				<Localization Lang="de" Text="Nebenquests abgeschlossen" />
+				<Localization Lang="en" Text="Side Quests Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="The Companions Quests Completed">
+				<Localization Lang="de" Text="Gefährten-Quests abgeschlossen" />
+				<Localization Lang="en" Text="The Companions Quests Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="The Dark Brotherhood Quests Completed">
+				<Localization Lang="de" Text="Dunkle-Bruderschaft-Quests abgeschlossen" />
+				<Localization Lang="en" Text="The Dark Brotherhood Quests Completed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Thieves&apos; Guild Quests Completed">
+				<Localization Lang="de" Text="Diebesgilden-Quests abgeschlossen" />
+				<Localization Lang="en" Text="Thieves&apos; Guild Quests Completed" />
+			</LocalizedLabel>
+		</StatisticSet>
+	</Category>
+
+	<Category TypeId="2">
+		<Name Key="Combat">
+			<Localization Lang="de" Text="Kampf" />
+			<Localization Lang="en" Text="Combat" />
+		</Name>
+		<StatisticSet>
+			<LocalizedLabel Key="Animals Killed">
+				<Localization Lang="de" Text="Tiere getötet" />
+				<Localization Lang="en" Text="Animals Killed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Automatons Killed">
+				<Localization Lang="de" Text="Maschinenkrieger getötet" />
+				<Localization Lang="en" Text="Automatons Killed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Backstabs">
+				<Localization Lang="de" Text="Überraschungsangriffe" />
+				<Localization Lang="en" Text="Backstabs" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Brawls Won">
+				<Localization Lang="de" Text="Faustkämpfe gewonnen" />
+				<Localization Lang="en" Text="Brawls Won" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Bunnies Slaughtered">
+				<Localization Lang="de" Text="Kaninchen geschlachtet" />
+				<Localization Lang="en" Text="Bunnies Slaughtered" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Creatures Killed">
+				<Localization Lang="de" Text="Kreaturen besiegt" />
+				<Localization Lang="en" Text="Creatures Killed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Critical Strikes">
+				<Localization Lang="de" Text="Kritische Treffer" />
+				<Localization Lang="en" Text="Critical Strikes" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Daedra Killed">
+				<Localization Lang="de" Text="Daedra getötet" />
+				<Localization Lang="en" Text="Daedra Killed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Favorite Weapon">
+				<Localization Lang="de" Text="Favorisierte Waffe" />
+				<Localization Lang="en" Text="Favorite Weapon" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="People Killed">
+				<Localization Lang="de" Text="Menschen getötet" />
+				<Localization Lang="en" Text="People Killed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Sneak Attacks">
+				<Localization Lang="de" Text="Schleichangriffe" />
+				<Localization Lang="en" Text="Sneak Attacks" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Undead Killed">
+				<Localization Lang="de" Text="Untote getötet" />
+				<Localization Lang="en" Text="Undead Killed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Weapons Disarmed">
+				<Localization Lang="de" Text="Gegner entwaffnet" />
+				<Localization Lang="en" Text="Weapons Disarmed" />
+			</LocalizedLabel>
+		</StatisticSet>
+	</Category>
+
+
+	<Category TypeId="3">
+		<Name Key="Magic">
+			<Localization Lang="de" Text="Magie" />
+			<Localization Lang="en" Text="Magic" />
+		</Name>
+		<StatisticSet>
+			<LocalizedLabel Key="Dragon Souls Collected">
+				<Localization Lang="de" Text="Drachenseelen gesammelt" />
+				<Localization Lang="en" Text="Dragon Souls Collected" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Favorite School">
+				<Localization Lang="de" Text="Favorisierte Magieschule" />
+				<Localization Lang="en" Text="Favorite School" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Favorite Shout">
+				<Localization Lang="de" Text="Favorisierter Schrei" />
+				<Localization Lang="en" Text="Favorite Shout" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Favorite Spell">
+				<Localization Lang="de" Text="Favorisierter Zauber" />
+				<Localization Lang="en" Text="Favorite Spell" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Shouts Learned">
+				<Localization Lang="de" Text="Gelernte Schreie" />
+				<Localization Lang="en" Text="Shouts Learned" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Shouts Mastered">
+				<Localization Lang="de" Text="Gemeisterte Schreie" />
+				<Localization Lang="en" Text="Shouts Mastered" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Shouts Unlocked">
+				<Localization Lang="de" Text="Schreie freigeschaltet" />
+				<Localization Lang="en" Text="Shouts Unlocked" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Spells Learned">
+				<Localization Lang="de" Text="Zauber gelernt" />
+				<Localization Lang="en" Text="Spells Learned" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Times Shouted">
+				<Localization Lang="de" Text="Schreie benutzt" />
+				<Localization Lang="en" Text="Times Shouted" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Words Of Power Learned">
+				<Localization Lang="de" Text="Worte der Macht gelernt" />
+				<Localization Lang="en" Text="Words Of Power Learned" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Words Of Power Unlocked">
+				<Localization Lang="de" Text="Worte der Macht freigeschaltet" />
+				<Localization Lang="en" Text="Words Of Power Unlocked" />
+			</LocalizedLabel>
+		</StatisticSet>
+	</Category>
+
+
+	<Category TypeId="4">
+		<Name Key="Crafting">
+			<Localization Lang="de" Text="Herstellen" />
+			<Localization Lang="en" Text="Crafting" />
+		</Name>
+		<StatisticSet>
+			<LocalizedLabel Key="Armor Improved">
+				<Localization Lang="de" Text="Rüstung verbessert" />
+				<Localization Lang="en" Text="Armor Improved" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Armor Made">
+				<Localization Lang="de" Text="Rüstung hergestellt" />
+				<Localization Lang="en" Text="Armor Made" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Ingredients Eaten">
+				<Localization Lang="de" Text="Zutaten gegessen" />
+				<Localization Lang="en" Text="Ingredients Eaten" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Ingredients Harvested">
+				<Localization Lang="de" Text="Zutaten gesammelt" />
+				<Localization Lang="en" Text="Ingredients Harvested" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Magic Items Made">
+				<Localization Lang="de" Text="Magische Objekte hergestellt" />
+				<Localization Lang="en" Text="Magic Items Made" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Nirnroots Found">
+				<Localization Lang="de" Text="Nirnwurzen gefunden" />
+				<Localization Lang="en" Text="Nirnroots Found" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Poisons Mixed">
+				<Localization Lang="de" Text="Gifte gemischt" />
+				<Localization Lang="en" Text="Poisons Mixed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Poisons Used">
+				<Localization Lang="de" Text="Gifte benutzt" />
+				<Localization Lang="en" Text="Poisons Used" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Potions Mixed">
+				<Localization Lang="de" Text="Tränke gebraut" />
+				<Localization Lang="en" Text="Potions Mixed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Potions Used">
+				<Localization Lang="de" Text="Tränke benutzt" />
+				<Localization Lang="en" Text="Potions Used" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Soul Gems Used">
+				<Localization Lang="de" Text="Seelensteine verwendet" />
+				<Localization Lang="en" Text="Soul Gems Used" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Souls Trapped">
+				<Localization Lang="de" Text="Seelen gefangen" />
+				<Localization Lang="en" Text="Souls Trapped" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Weapons Improved">
+				<Localization Lang="de" Text="Waffen verbessert" />
+				<Localization Lang="en" Text="Weapons Improved" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Weapons Made">
+				<Localization Lang="de" Text="Waffen hergestellt" />
+				<Localization Lang="en" Text="Weapons Made" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Wings Plucked">
+				<Localization Lang="de" Text="Flügel gerupft" />
+				<Localization Lang="en" Text="Wings Plucked" />
+			</LocalizedLabel>
+		</StatisticSet>
+	</Category>
+
+
+	<Category TypeId="5">
+		<Name Key="Crime">
+			<Localization Lang="de" Text="Verbrechen" />
+			<Localization Lang="en" Text="Crime" />
+		</Name>
+		<StatisticSet>
+			<LocalizedLabel Key="Assaults">
+				<Localization Lang="de" Text="Angriffe" />
+				<Localization Lang="en" Text="Assaults" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Days Jailed">
+				<Localization Lang="de" Text="Tage im Gefängnis" />
+				<Localization Lang="en" Text="Days Jailed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Eastmarch Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Eastmarch" />
+				<Localization Lang="en" Text="Eastmarch Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Falkreath Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Falkenring" />
+				<Localization Lang="en" Text="Falkreath Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Fines Paid">
+				<Localization Lang="de" Text="Strafen bezahlt" />
+				<Localization Lang="en" Text="Fines Paid" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Haafingar Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Haafingar" />
+				<Localization Lang="en" Text="Haafingar Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Hjaalmarch Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Hjaalmarch" />
+				<Localization Lang="en" Text="Hjaalmarch Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Horses Stolen">
+				<Localization Lang="de" Text="Pferde gestohlen" />
+				<Localization Lang="en" Text="Horses Stolen" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Items Pickpocketed">
+				<Localization Lang="de" Text="Taschendiebstähle" />
+				<Localization Lang="en" Text="Items Pickpocketed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Items Stolen">
+				<Localization Lang="de" Text="Diebstähle" />
+				<Localization Lang="en" Text="Items Stolen" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Jail Escapes">
+				<Localization Lang="de" Text="Gefängnisausbrüche" />
+				<Localization Lang="en" Text="Jail Escapes" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Largest Bounty">
+				<Localization Lang="de" Text="Größtes Kopfgeld" />
+				<Localization Lang="en" Text="Largest Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Locks Picked">
+				<Localization Lang="de" Text="Schlösser geknackt" />
+				<Localization Lang="en" Text="Locks Picked" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Murders">
+				<Localization Lang="de" Text="Morde" />
+				<Localization Lang="en" Text="Murders" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Pockets Picked">
+				<Localization Lang="de" Text="Taschen ausgeraubt" />
+				<Localization Lang="en" Text="Pockets Picked" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="The Pale Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Pale" />
+				<Localization Lang="en" Text="The Pale Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="The Reach Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Reach" />
+				<Localization Lang="en" Text="The Reach Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="The Rift Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Rifton" />
+				<Localization Lang="en" Text="The Rift Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Times Jailed">
+				<Localization Lang="de" Text="Gefängnisaufenthalte" />
+				<Localization Lang="en" Text="Times Jailed" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Total Lifetime Bounty">
+				<Localization Lang="de" Text="Gesamtes Kopfgeld" />
+				<Localization Lang="en" Text="Total Lifetime Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Trespasses">
+				<Localization Lang="de" Text="Unerlaubtes Eindringen" />
+				<Localization Lang="en" Text="Trespasses" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Tribal Orcs Bounty">
+				<Localization Lang="de" Text="Kopfeld in Orc Camps" />
+				<Localization Lang="en" Text="Tribal Orcs Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Whiterun Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Weißlauf" />
+				<Localization Lang="en" Text="Whiterun Bounty" />
+			</LocalizedLabel>
+			<LocalizedLabel Key="Winterhold Bounty">
+				<Localization Lang="de" Text="Kopfgeld in Winterfeste" />
+				<Localization Lang="en" Text="Winterhold Bounty" />
+			</LocalizedLabel>
+		</StatisticSet>
+	</Category>
+</CategorySet>

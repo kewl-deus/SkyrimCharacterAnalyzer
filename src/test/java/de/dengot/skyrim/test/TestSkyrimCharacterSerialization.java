@@ -8,17 +8,18 @@ import java.io.InputStreamReader;
 import org.testng.annotations.Test;
 
 import de.dengot.skyrim.io.SkyrimCharacterSerializer;
+import de.dengot.skyrim.io.XmlSkyrimCharacterSerializer;
 import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 
-public class TestSkyrimCharacterSerializer {
+public class TestSkyrimCharacterSerialization {
 
     @Test
     public void testReadFromXml() {
         InputStream input = getClass().getResourceAsStream("/skyrimcharacters.xml");
         InputStreamReader reader = new InputStreamReader(input);
 
-        SkyrimCharacterSerializer serializer = new SkyrimCharacterSerializer();
+        SkyrimCharacterSerializer serializer = new XmlSkyrimCharacterSerializer();
         SkyrimCharacterList charList = serializer.read(reader);
 
         for (SkyrimCharacter ch : charList) {
@@ -32,7 +33,7 @@ public class TestSkyrimCharacterSerializer {
         SkyrimCharacterList charList = new SkyrimCharacterList();
         charList.getCharacters().add(new SkyrimCharacter("testname", "testrace"));
 
-        SkyrimCharacterSerializer serializer = new SkyrimCharacterSerializer();
+        SkyrimCharacterSerializer serializer = new XmlSkyrimCharacterSerializer();
         serializer.write(charList, new FileWriter("c:/temp/skyrimtestchar.xml"));
     }
 

@@ -17,7 +17,7 @@ public class QueryOptimizedSnapshot extends SkyrimCharacterSnapshot {
         super(id, label, saveTime, level, location, stats);
         createStatsCache();
     }
-
+    
     private void createStatsCache() {
         statsCache = new HashMap<String, Integer>();
         for (StatisticValue statsVal : getStats()) {
@@ -28,5 +28,9 @@ public class QueryOptimizedSnapshot extends SkyrimCharacterSnapshot {
     @Override
     public int getStatisticValue(String statName) {
         return statsCache.get(statName);
+    }
+    
+    public void setStatisticValue(String statName, int value){
+    	statsCache.put(statName, value);
     }
 }
