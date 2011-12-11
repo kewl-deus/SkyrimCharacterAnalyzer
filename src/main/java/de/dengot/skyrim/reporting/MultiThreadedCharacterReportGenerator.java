@@ -99,6 +99,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
             copyToOutputFolder("index.html");
             copyToOutputFolder("sca-styles.css");
             copyToOutputFolder("star_yellow.gif");
+            copyToOutputFolder("Parchment_bg.jpg");
 
             writeMainSummaryFrame(characters);
             writeMainSummaryCharts(characters);

@@ -1,7 +1,5 @@
 package de.dengot.skyrim.reporting.chart;
 
-import java.awt.Color;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -41,9 +39,10 @@ public class CategoryBarChartProducer extends ChartProducer {
                 ChartFactory.createBarChart3D(statsCategory.getName(), "Category", "Amount",
                         dataset, PlotOrientation.VERTICAL, true, true, false);
 
-        chart.setBackgroundPaint(Color.WHITE);
+        chart.setBackgroundPaint(CHART_BACKGROUND);
 
         CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
+        categoryplot.setBackgroundPaint(PLOT_BACKGROUND);
 
         CategoryAxis categoryaxis = categoryplot.getDomainAxis();
         categoryaxis.setCategoryLabelPositions(CategoryLabelPositions

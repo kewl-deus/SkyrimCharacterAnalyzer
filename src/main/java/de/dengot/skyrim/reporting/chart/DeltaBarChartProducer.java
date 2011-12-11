@@ -1,6 +1,5 @@
 package de.dengot.skyrim.reporting.chart;
 
-import java.awt.Color;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
@@ -43,7 +42,7 @@ public class DeltaBarChartProducer extends ChartProducer {
                 ChartFactory.createXYBarChart(this.statName, SkyrimConstants.DAYS_PASSED, false,
                         "Amount", dataset, PlotOrientation.VERTICAL, true, true, false);
 
-        chart.setBackgroundPaint(Color.WHITE);
+        chart.setBackgroundPaint(CHART_BACKGROUND);
 
         TextTitle texttitle =
                 new TextTitle(MessageFormat.format("Change of {0} per gameday", this.statName));
@@ -55,6 +54,7 @@ public class DeltaBarChartProducer extends ChartProducer {
 
         
         XYPlot plot = (XYPlot) chart.getPlot();
+        plot.setBackgroundPaint(PLOT_BACKGROUND);
         
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());

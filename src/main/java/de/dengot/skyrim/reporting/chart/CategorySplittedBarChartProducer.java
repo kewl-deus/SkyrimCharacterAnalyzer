@@ -1,6 +1,5 @@
 package de.dengot.skyrim.reporting.chart;
 
-import java.awt.Color;
 import java.text.NumberFormat;
 import java.util.ListIterator;
 
@@ -87,9 +86,10 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
                 ChartFactory.createBarChart3D(statsCategory.getName(), "Category", "Amount",
                         dataset, PlotOrientation.VERTICAL, true, true, false);
 
-        chart.setBackgroundPaint(Color.WHITE);
+        chart.setBackgroundPaint(CHART_BACKGROUND);
 
         CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
+        categoryplot.setBackgroundPaint(PLOT_BACKGROUND);
 
         CategoryAxis categoryaxis = categoryplot.getDomainAxis();
         categoryaxis.setCategoryLabelPositions(CategoryLabelPositions

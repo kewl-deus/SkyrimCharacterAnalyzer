@@ -6,7 +6,8 @@
       margin-left: 10;
       margin-right: 10;
       font:normal 80% arial,helvetica,sanserif;
-      background-color:#FFFFFF;
+      /* background-color:#FBEFD5; */
+      background: url("Parchment_bg.jpg") repeat scroll 0 0 #FAEBD7;
       color:#000000;
     }
     .a td {

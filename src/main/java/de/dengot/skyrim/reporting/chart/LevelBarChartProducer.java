@@ -35,9 +35,10 @@ public class LevelBarChartProducer extends ChartProducer {
                 ChartFactory.createBarChart3D("Character Levels", "Characters", "Level", dataset,
                         PlotOrientation.VERTICAL, false, true, false);
         
-        chart.setBackgroundPaint(Color.WHITE);
+        chart.setBackgroundPaint(CHART_BACKGROUND);
         
         CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
+        categoryplot.setBackgroundPaint(PLOT_BACKGROUND);
         
         AverageRelatedBarRenderer3D renderer = new AverageRelatedBarRenderer3D(avgLevel);
         renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
@@ -94,9 +95,9 @@ public class LevelBarChartProducer extends ChartProducer {
             CategoryDataset categorydataset = getPlot().getDataset();
             double d = categorydataset.getValue(i, j).doubleValue();
             if (d >= avgValue) {
-                return Color.green;
+                return Color.GREEN;
             } else {
-                return Color.red;
+                return Color.RED;
             }
         }
 

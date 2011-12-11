@@ -1,6 +1,5 @@
 package de.dengot.skyrim.reporting.chart;
 
-import java.awt.Color;
 import java.text.NumberFormat;
 
 import org.jfree.chart.ChartFactory;
@@ -48,7 +47,7 @@ public class CumulativeAreaChartProducer extends ChartProducer {
                         SkyrimConstants.DAYS_PASSED, "Amount", dataset, PlotOrientation.VERTICAL,
                         true, true, false);
 
-        chart.setBackgroundPaint(Color.WHITE);
+        chart.setBackgroundPaint(CHART_BACKGROUND);
 
         TextTitle texttitle =
                 new TextTitle("Cumalitive Timeline (in gamedays) for " + this.statName);
@@ -60,9 +59,9 @@ public class CumulativeAreaChartProducer extends ChartProducer {
 
         XYPlot xyplot = (XYPlot) chart.getPlot();
         xyplot.setForegroundAlpha(0.65F);
+        xyplot.setBackgroundPaint(PLOT_BACKGROUND);
 
-        XYPlot plot = (XYPlot) chart.getPlot();
-        NumberAxis numberaxis = (NumberAxis) plot.getRangeAxis();
+        NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
         numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
 
         return chart;
