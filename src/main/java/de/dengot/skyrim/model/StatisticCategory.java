@@ -36,24 +36,20 @@ public class StatisticCategory {
 		return categoryType;
 	}
 
-	public String getName() {
-		return this.name.getDefaultLabel();
-	}
-
-	public List<String> getLocalizedStatNames() {
-		List<String> translatedNames = new ArrayList<String>();
-		for (LocalizedLabel locLabel : statLabels) {
-			translatedNames.add(locLabel.getDefaultLabel());
-		}
-		return translatedNames;
+	public LocalizedLabel getName() {
+		return name;
 	}
 	
+	public String getLocalizedName() {
+		return this.name.getLocalizedText();
+	}
+
 	public List<LocalizedLabel> getStatLabels(){
 		return this.statLabels;
 	}
 
 	@Override
 	public String toString() {
-		return getName();
+		return getLocalizedName();
 	}
 }

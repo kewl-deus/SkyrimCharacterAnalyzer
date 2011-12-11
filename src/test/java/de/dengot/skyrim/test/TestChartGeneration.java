@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import de.dengot.skyrim.io.ChartWriter;
 import de.dengot.skyrim.io.PngChartWriter;
+import de.dengot.skyrim.model.LocalizedLabel;
 import de.dengot.skyrim.model.StatisticCategory;
 import de.dengot.skyrim.model.StatisticCategoryProvider;
 import de.dengot.skyrim.model.XmlStatisticCategoryProvider;
@@ -27,14 +28,14 @@ public class TestChartGeneration extends AbstractSkyrimCharacterBasedTestCase {
 		StatisticCategoryProvider catProvider = new XmlStatisticCategoryProvider();
 
 		for (StatisticCategory cat : catProvider) {
-			writeChart(new CategorySplittedBarChartProducer(cat), "CategorySplittedBarChart-" + cat.getName());
-			writeChart(new CategoryBarChartProducer(cat), "CategoryBarChart-" + cat.getName());
+			writeChart(new CategorySplittedBarChartProducer(cat), "CategorySplittedBarChart-" + cat.getName().getKey());
+			writeChart(new CategoryBarChartProducer(cat), "CategoryBarChart-" + cat.getName().getKey());
 		}
 
-		String statName = "Chests Looted";
-		writeChart(new CumulativeAreaChartProducer(statName, false), "CumulativeAreaChart");
-		writeChart(new CumulativeAreaChartProducer(statName, true), "NormalizedCumulativeAreaChart");
-		writeChart(new DeltaBarChartProducer(statName), "DeltaBarChart");
+		LocalizedLabel statLabel = new LocalizedLabel("Chests Looted");
+		writeChart(new CumulativeAreaChartProducer(statLabel, false), "CumulativeAreaChart");
+		writeChart(new CumulativeAreaChartProducer(statLabel, true), "NormalizedCumulativeAreaChart");
+		writeChart(new DeltaBarChartProducer(statLabel), "DeltaBarChart");
 		writeChart(new LevelBarChartProducer(), "LevelBarChart");
 		writeChart(new LevelCumulativeAreaChartProducer(), "LevelCumulativeAreaChart");
 		writeChart(new LevelDeltaBarChartProducer(), "LevelDeltaBarChart");
@@ -46,8 +47,7 @@ public class TestChartGeneration extends AbstractSkyrimCharacterBasedTestCase {
 		JFreeChart chart = chartProducer.createChart(sampleCharacters);
 		ChartWriter cw = new PngChartWriter();
 		cw.writeChart(chart, 1600, 800, new File("c:/temp/" + filename + ".png"));
-		// ChartUtilities.writeImageMap(writer, name, info,
-		// useOverLibForToolTips)
+		// ChartUtilities.writeImageMap(writer, name, info, useOverLibForToolTips)
 	}
 
 }

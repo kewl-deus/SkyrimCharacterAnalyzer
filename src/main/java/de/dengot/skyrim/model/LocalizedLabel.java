@@ -23,32 +23,32 @@ public class LocalizedLabel {
 		return key;
 	}
 
-	public String getLabel(Locale locale) {
-		return getLabel(locale.getLanguage());
+	public String getText(Locale locale) {
+		return getText(locale.getLanguage());
 	}
 	
 	/**
 	 * @param twoLetterLangIsoCode ISO 639
 	 * @return
 	 */
-	public String getLabel(String twoLetterLangIsoCode) {
+	public String getText(String twoLetterLangIsoCode) {
 		String label = translations.getProperty(twoLetterLangIsoCode);
 		return label == null ? key : label;
 	}
 
-	public String getDefaultLabel() {
-		return getLabel(Locale.getDefault());
+	public String getLocalizedText() {
+		return getText(Locale.getDefault());
 	}
 
-	public void setLabel(Locale locale, String translation) {
-		setLabel(locale.getLanguage(), translation);
+	public void setText(Locale locale, String translation) {
+		setText(locale.getLanguage(), translation);
 	}
 	
 	/**
 	 * @param twoLetterLangCode ISO 639
 	 * @param translation
 	 */
-	public void setLabel(String twoLetterLangCode, String translation){
+	public void setText(String twoLetterLangCode, String translation){
 		this.translations.setProperty(twoLetterLangCode, translation);
 	}
 	
@@ -58,7 +58,7 @@ public class LocalizedLabel {
 
 	@Override
 	public String toString() {
-		return getDefaultLabel();
+		return getLocalizedText();
 	}
 
 	@Override

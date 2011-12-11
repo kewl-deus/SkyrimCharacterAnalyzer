@@ -58,18 +58,12 @@ public class PropertiesStatisticCategoryProvider extends StatisticCategoryProvid
 		return statNames;
 	}
 
+	@Override
 	public SortedSet<StatisticCategory> getCategories() {
 		return Collections.unmodifiableSortedSet(categories);
 	}
 
-	public StatisticCategory getCategory(String name) {
-		for (StatisticCategory cat : categories) {
-			if (cat.getName().equals(name)) {
-				return cat;
-			}
-		}
-		return null;
-	}
+
 
 	private Properties loadProperties(String resourcePath) {
 		Properties props = new Properties();

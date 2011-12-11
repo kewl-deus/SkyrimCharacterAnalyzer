@@ -27,7 +27,7 @@ public class LocalizedLabelConverter implements Converter {
 		for (String lang : sortedLangs) {
 			writer.startNode("Localization");
 			writer.addAttribute("Lang", lang);
-			writer.addAttribute("Text", locLabel.getLabel(lang));
+			writer.addAttribute("Text", locLabel.getText(lang));
 			writer.endNode();
 		}
 	}
@@ -40,7 +40,7 @@ public class LocalizedLabelConverter implements Converter {
 			reader.moveDown();
 			String lang = reader.getAttribute("Lang");
 			String translation = reader.getAttribute("Text");
-			locLabel.setLabel(lang, translation);
+			locLabel.setText(lang, translation);
 			reader.moveUp();
 		}
 		return locLabel;

@@ -15,6 +15,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
+import de.dengot.skyrim.model.LocalizedLabel;
 import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.StatisticCategory;
@@ -36,7 +37,7 @@ public class CategoryBarChartProducer extends ChartProducer {
         CategoryDataset dataset = createDataset(characters);
 
         JFreeChart chart =
-                ChartFactory.createBarChart3D(statsCategory.getName(), "Category", "Amount",
+                ChartFactory.createBarChart3D(statsCategory.getLocalizedName(), "Category", "Amount",
                         dataset, PlotOrientation.VERTICAL, true, true, false);
 
         chart.setBackgroundPaint(CHART_BACKGROUND);
@@ -71,10 +72,10 @@ public class CategoryBarChartProducer extends ChartProducer {
     protected CategoryDataset createDataset(SkyrimCharacterList characters) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (String statName : this.statsCategory.getLocalizedStatNames()) {
+        for (LocalizedLabel statLabel : this.statsCategory.getStatLabels()) {
             for (SkyrimCharacter skyrimCharacter : characters) {
-                int value = getCharacterValue(skyrimCharacter, statName);
-                dataset.addValue(value, skyrimCharacter.getName(), statName);
+                int value = getCharacterValue(skyrimCharacter, statLabel.getKey());
+                dataset.addValue(value, skyrimCharacter.getName(), statLabel.getLocalizedText());
             }
         }
 

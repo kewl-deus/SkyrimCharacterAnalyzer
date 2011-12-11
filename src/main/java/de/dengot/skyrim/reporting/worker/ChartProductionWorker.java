@@ -35,6 +35,7 @@ public class ChartProductionWorker implements Runnable {
 
                 ChartProducer producer = workload.getChartProducer();
                 JFreeChart chart = producer.createChart(workload.getSkyrimCharacters());
+                                
                 ChartWriter writer = workload.getChartWriter();
                 writer.writeChart(chart, workload.getWidth(), workload.getHeight(), workload
                         .getOutputFile());

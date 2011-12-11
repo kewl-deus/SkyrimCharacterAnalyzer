@@ -10,14 +10,14 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 <td class="bannercell" rowspan="2"></td><td class="text-align:right">
-<h2>${cat.name}</h2>
+<h2>${cat.name.localizedText}</h2>
 </td>
 </table>
 
 <hr size="1">
 
 <p>
-<img src="${cat.name} category-summarybar-chart.png" alt="${cat.name} cumulative-areachart" />
+<img src="${cat.name.key} category-summarybar-chart.png" alt="${cat.name.key} cumulative-areachart" />
 </p>
 
 <h3>Cumulated values per character</h3>

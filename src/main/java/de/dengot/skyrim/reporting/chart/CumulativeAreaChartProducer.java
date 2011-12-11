@@ -16,6 +16,7 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
 import org.jfree.util.UnitType;
 
+import de.dengot.skyrim.model.LocalizedLabel;
 import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.SkyrimCharacterSnapshot;
@@ -23,16 +24,16 @@ import de.dengot.skyrim.model.SkyrimConstants;
 
 public class CumulativeAreaChartProducer extends ChartProducer {
 
-    private String statName;
+    private LocalizedLabel statLabel;
     private boolean normalized;
 
-    public CumulativeAreaChartProducer(String statName) {
-        this(statName, false);
+    public CumulativeAreaChartProducer(LocalizedLabel statLabel) {
+        this(statLabel, false);
     }
 
-    public CumulativeAreaChartProducer(String statName, boolean normalized) {
+    public CumulativeAreaChartProducer(LocalizedLabel statLabel, boolean normalized) {
         super();
-        this.statName = statName;
+        this.statLabel = statLabel;
         this.normalized = normalized;
     }
 
@@ -43,14 +44,14 @@ public class CumulativeAreaChartProducer extends ChartProducer {
                 normalized ? createNormalizedDataset(characters) : createDataset(characters);
 
         JFreeChart chart =
-                ChartFactory.createXYAreaChart("Total " + this.statName,
+                ChartFactory.createXYAreaChart("Total " + this.statLabel.getLocalizedText(),
                         SkyrimConstants.DAYS_PASSED, "Amount", dataset, PlotOrientation.VERTICAL,
                         true, true, false);
-
+        
         chart.setBackgroundPaint(CHART_BACKGROUND);
 
         TextTitle texttitle =
-                new TextTitle("Cumalitive Timeline (in gamedays) for " + this.statName);
+                new TextTitle("Cumalitive Timeline (in gamedays) for " + this.statLabel.getLocalizedText());
         texttitle.setPosition(RectangleEdge.TOP);
         texttitle.setPadding(new RectangleInsets(UnitType.RELATIVE, 0.050000000000000003D,
                 0.050000000000000003D, 0.050000000000000003D, 0.050000000000000003D));
@@ -112,10 +113,10 @@ public class CumulativeAreaChartProducer extends ChartProducer {
     }
 
     protected int getSnapshotValue(SkyrimCharacterSnapshot snapshot){
-        return snapshot.getStatisticValue(this.statName);
+        return snapshot.getStatisticValue(this.statLabel.getKey());
     }
     
     protected int getCharacterValueAtGameDay(int gameDay, SkyrimCharacter skyrimCharacter){
-        return skyrimCharacter.getValueAtGameDay(gameDay, this.statName);
+        return skyrimCharacter.getValueAtGameDay(gameDay, this.statLabel.getKey());
     }
 }

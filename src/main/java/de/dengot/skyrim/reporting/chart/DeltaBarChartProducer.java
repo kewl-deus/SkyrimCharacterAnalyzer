@@ -19,6 +19,7 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
 import org.jfree.util.UnitType;
 
+import de.dengot.skyrim.model.LocalizedLabel;
 import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.SkyrimCharacterSnapshot;
@@ -26,11 +27,11 @@ import de.dengot.skyrim.model.SkyrimConstants;
 
 public class DeltaBarChartProducer extends ChartProducer {
 
-    private String statName;
+    private LocalizedLabel statLabel;
 
-    public DeltaBarChartProducer(String statName) {
+    public DeltaBarChartProducer(LocalizedLabel statLabel) {
         super();
-        this.statName = statName;
+        this.statLabel = statLabel;
     }
     
     @Override
@@ -39,13 +40,13 @@ public class DeltaBarChartProducer extends ChartProducer {
         IntervalXYDataset dataset = createDataset(characters);
 
         JFreeChart chart =
-                ChartFactory.createXYBarChart(this.statName, SkyrimConstants.DAYS_PASSED, false,
+                ChartFactory.createXYBarChart(this.statLabel.getLocalizedText(), SkyrimConstants.DAYS_PASSED, false,
                         "Amount", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         chart.setBackgroundPaint(CHART_BACKGROUND);
 
         TextTitle texttitle =
-                new TextTitle(MessageFormat.format("Change of {0} per gameday", this.statName));
+                new TextTitle(MessageFormat.format("Change of {0} per gameday", this.statLabel.getLocalizedText()));
         texttitle.setPosition(RectangleEdge.TOP);
         texttitle.setPadding(new RectangleInsets(UnitType.RELATIVE, 0.050000000000000003D,
                 0.050000000000000003D, 0.050000000000000003D, 0.050000000000000003D));
@@ -92,6 +93,6 @@ public class DeltaBarChartProducer extends ChartProducer {
     }
     
     protected int getSnapshotValue(SkyrimCharacterSnapshot snapshot){
-        return snapshot.getStatisticValue(this.statName);
+        return snapshot.getStatisticValue(this.statLabel.getKey());
     }
 }

@@ -22,6 +22,7 @@ import org.jfree.data.statistics.HistogramBin;
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
+import de.dengot.skyrim.model.LocalizedLabel;
 import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.StatisticCategory;
@@ -72,7 +73,7 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
         topRangeAxis.setLowerBound(histogram.getUpperBoundBin().getStartBoundary());
         topRangeAxis.setUpperBound(rangeBounds.getUpperBound());
 
-        JFreeChart combinedChart = new JFreeChart(statsCategory.getName(), combinedPlot);
+        JFreeChart combinedChart = new JFreeChart(statsCategory.getLocalizedName(), combinedPlot);
 
         CategoryAxis categoryaxis = combinedPlot.getDomainAxis();
         categoryaxis.setCategoryLabelPositions(CategoryLabelPositions
@@ -83,7 +84,7 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
 
     protected JFreeChart createPartialChart(CategoryDataset dataset) {
         JFreeChart chart =
-                ChartFactory.createBarChart3D(statsCategory.getName(), "Category", "Amount",
+                ChartFactory.createBarChart3D(statsCategory.getLocalizedName(), "Category", "Amount",
                         dataset, PlotOrientation.VERTICAL, true, true, false);
 
         chart.setBackgroundPaint(CHART_BACKGROUND);
@@ -110,13 +111,13 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
     }
 
     protected Histogram createHistogram(SkyrimCharacterList characters, int binCount) {
-        double[] values = new double[this.statsCategory.getLocalizedStatNames().size()];
+        double[] values = new double[this.statsCategory.getStatLabels().size()];
         double minimum = Integer.MAX_VALUE;
         double maximum = Integer.MIN_VALUE;
-        for (ListIterator<String> it = this.statsCategory.getLocalizedStatNames().listIterator(); it
+        for (ListIterator<LocalizedLabel> it = this.statsCategory.getStatLabels().listIterator(); it
                 .hasNext();) {
-            String statName = it.next();
-            double value = characters.getMaxValue(statName);
+        	LocalizedLabel statLabel = it.next();
+            double value = characters.getMaxValue(statLabel.getKey());
             values[it.previousIndex()] = value;
 
             minimum = value < minimum ? value : minimum;
@@ -129,21 +130,21 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
     protected CategoryDataset createDataset(SkyrimCharacterList characters) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (String statName : this.statsCategory.getLocalizedStatNames()) {
+        for (LocalizedLabel statLabel : this.statsCategory.getStatLabels()) {
             for (SkyrimCharacter skyrimCharacter : characters) {
-                int value = getCharacterValue(skyrimCharacter, statName);
-                dataset.addValue(value, skyrimCharacter.getName(), statName);
+                int value = getCharacterValue(skyrimCharacter, statLabel);
+                dataset.addValue(value, skyrimCharacter.getName(), statLabel.getLocalizedText());
             }
         }
 
         return dataset;
     }
 
-    protected int getCharacterValue(SkyrimCharacter skyrimCharacter, String statName) {
-        int val = skyrimCharacter.getMaxValue(statName);
+    protected int getCharacterValue(SkyrimCharacter skyrimCharacter, LocalizedLabel statLabel) {
+        int val = skyrimCharacter.getMaxValue(statLabel.getKey());
         LOGGER
                 .trace("CharacterValue({}, {}) = {}",
-                        new Object[] { skyrimCharacter, statName, val });
+                        new Object[] { skyrimCharacter, statLabel.getKey(), val });
         return val;
     }
 

@@ -16,10 +16,11 @@
     </tr>
     #foreach( $cat in $categories )
     <tr>
-        <td nowrap="nowrap"><a
-            href="frame-summary-${cat.name}.html"
-            onclick='parent.statList.location.href="frame-${cat.name}.html"'
-            target="summary">$cat</a></td>
+        <td nowrap="nowrap">
+        	<a href="frame-summary-${cat.name.key}.html"
+               onclick='parent.statList.location.href="frame-${cat.name.key}.html"'
+               target="summary">${cat.name.localizedText}</a>
+        </td>
     </tr>
     #end
 </table>

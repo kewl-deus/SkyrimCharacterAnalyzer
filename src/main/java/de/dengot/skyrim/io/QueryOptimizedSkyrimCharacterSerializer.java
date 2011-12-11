@@ -4,7 +4,6 @@ import java.io.Reader;
 import java.io.Writer;
 
 import de.dengot.skyrim.model.SkyrimCharacterList;
-import de.dengot.skyrim.model.XmlStatisticCategoryProvider;
 import de.dengot.skyrim.model.queryoptimized.QueryOptimizedModelFactory;
 
 public class QueryOptimizedSkyrimCharacterSerializer implements SkyrimCharacterSerializer {
@@ -14,7 +13,7 @@ public class QueryOptimizedSkyrimCharacterSerializer implements SkyrimCharacterS
 
 	public QueryOptimizedSkyrimCharacterSerializer(SkyrimCharacterSerializer wrappedSerializer) {
 		super();
-		this.modelFactory = new QueryOptimizedModelFactory(new XmlStatisticCategoryProvider());
+		this.modelFactory = new QueryOptimizedModelFactory();
 		this.wrappedSerializer = wrappedSerializer;
 	}
 

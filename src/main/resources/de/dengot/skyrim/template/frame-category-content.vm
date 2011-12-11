@@ -11,11 +11,11 @@
 <table width="100%">
 	<tbody>
 
-	#foreach( $statName in $statNames )
+	#foreach( $statLabel in $statLabels )
       <tr>
-        <td>
-          <td nowrap="nowrap"><a target="summary" href="${statName}.html">$statName</a></td>
-        </td>
+          <td nowrap="nowrap">
+            <a target="summary" href="${statLabel.key}.html">${statLabel.localizedText}</a>
+         </td>
       </tr>
     #end
 	
