@@ -29,6 +29,6 @@ public class AbstractSkyrimCharacterBasedTestCase {
 	@SuppressWarnings("unused")
 	@BeforeTest
 	protected void setDefaultLanguage() {
-		//Locale.setDefault(Locale.ENGLISH);
+		Locale.setDefault(Locale.GERMAN);
 	}
 }

@@ -9,14 +9,17 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -211,7 +214,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 	private void writeCategorySummaryChart(StatisticCategory category, SkyrimCharacterList characters)
 			throws IOException {
 		CategoryBarChartProducer catBarProducer = new CategoryBarChartProducer(category);
-		JFreeChart catSummaryBarChart = catBarProducer.createChart(characters);
+		JFreeChart catSummaryBarChart = catBarProducer.produceChart(characters);
 		writeChart(catSummaryBarChart, format("{0} category-summarybar-chart", category.getName().getKey()));
 	}
 
@@ -226,7 +229,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 
 	private void writeAllStatNamesFrame() throws IOException {
 		VelocityContext context = new VelocityContext();
-		context.put("statLabels", statCatProvider.getAllStats());
+		context.put("statLabels", escapeHtml(statCatProvider.getAllStats()));
 		FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-statnames.html"));
 		loadTemplate("frame-category-content.vm").merge(context, writer);
 		writer.flush();
@@ -235,7 +238,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 
 	private TemplateMergeWorkload createStatNamesFrameWorkload(StatisticCategory category) throws IOException {
 		VelocityContext context = new VelocityContext();
-		context.put("statLabels", category.getStatLabels());
+		context.put("statLabels", escapeHtml(category.getStatLabels()));
 		File outputFile = new File(this.outputFolder, "frame-" + category.getName().getKey() + ".html");
 		return new TemplateMergeWorkload(loadTemplate("frame-category-content.vm"), context, outputFile);
 	}
@@ -254,7 +257,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 		VelocityContext context = new VelocityContext();
 
 		context.put("cat", category);
-		context.put("playerMaxValueTable", createSummaryTable(characters, category.getStatLabels()));
+		context.put("playerMaxValueTable", createSummaryTable(characters, escapeHtml(category.getStatLabels())));
 
 		File outputFile = new File(this.outputFolder, "frame-summary-" + category.getName().getKey() + ".html");
 		return new TemplateMergeWorkload(loadTemplate("category-summarypage.vm"), context, outputFile);
@@ -354,7 +357,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 	private void writeMainSummaryFrame(SkyrimCharacterList characters) throws IOException {
 		VelocityContext context = new VelocityContext();
 
-		context.put("playerMaxValueTable", createSummaryTable(characters, statCatProvider.getAllStats()));
+		context.put("playerMaxValueTable", createSummaryTable(characters, escapeHtml(statCatProvider.getAllStats())));
 
 		FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-summary.html"));
 		loadTemplate("frame-summary.vm").merge(context, writer);
@@ -363,12 +366,24 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
 	}
 
 	private void writeMainSummaryCharts(SkyrimCharacterList characters) throws IOException {
-		JFreeChart levelBarChart = new LevelBarChartProducer().createChart(characters);
-		JFreeChart levelCumulAreaChart = new LevelCumulativeAreaChartProducer().createChart(characters);
-		JFreeChart levelDeltaBarChart = new LevelDeltaBarChartProducer().createChart(characters);
+		JFreeChart levelBarChart = new LevelBarChartProducer().produceChart(characters);
+		JFreeChart levelCumulAreaChart = new LevelCumulativeAreaChartProducer().produceChart(characters);
+		JFreeChart levelDeltaBarChart = new LevelDeltaBarChartProducer().produceChart(characters);
 
 		writeChart(levelBarChart, "level-barchart");
 		writeChart(levelCumulAreaChart, "level-cumulative-areachart");
 		writeChart(levelDeltaBarChart, "level-delta-barchart");
+	}
+
+	private List<LocalizedLabel> escapeHtml(List<LocalizedLabel> labels) {
+		List<LocalizedLabel> escapedLabels = new ArrayList<LocalizedLabel>();
+		for (LocalizedLabel localizedLabel : labels) {
+			LocalizedLabel escapedLabel = new LocalizedLabel(localizedLabel.getKey());
+			String escapedHtml = StringEscapeUtils.escapeHtml(localizedLabel.getLocalizedText());
+			escapedLabel.setText(Locale.getDefault(), escapedHtml);
+			escapedLabels.add(escapedLabel);
+		}
+		Collections.sort(escapedLabels, StatisticCategoryProvider.LocalizedLabelComparator);
+		return escapedLabels;
 	}
 }

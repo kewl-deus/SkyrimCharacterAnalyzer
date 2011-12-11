@@ -44,7 +44,7 @@ public class TestChartGeneration extends AbstractSkyrimCharacterBasedTestCase {
 
 	public void writeChart(ChartProducer chartProducer, String filename) throws IOException {
 		System.out.println("Writing " + filename);
-		JFreeChart chart = chartProducer.createChart(sampleCharacters);
+		JFreeChart chart = chartProducer.produceChart(sampleCharacters);
 		ChartWriter cw = new PngChartWriter();
 		cw.writeChart(chart, 1600, 800, new File("c:/temp/" + filename + ".png"));
 		// ChartUtilities.writeImageMap(writer, name, info, useOverLibForToolTips)

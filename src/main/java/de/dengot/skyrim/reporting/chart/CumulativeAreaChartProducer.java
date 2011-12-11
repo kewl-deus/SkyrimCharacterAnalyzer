@@ -38,7 +38,7 @@ public class CumulativeAreaChartProducer extends ChartProducer {
     }
 
     @Override
-    public JFreeChart createChart(SkyrimCharacterList characters) {
+    protected JFreeChart createChart(SkyrimCharacterList characters) {
 
         XYDataset dataset =
                 normalized ? createNormalizedDataset(characters) : createDataset(characters);
@@ -48,8 +48,6 @@ public class CumulativeAreaChartProducer extends ChartProducer {
                         SkyrimConstants.DAYS_PASSED, "Amount", dataset, PlotOrientation.VERTICAL,
                         true, true, false);
         
-        chart.setBackgroundPaint(CHART_BACKGROUND);
-
         TextTitle texttitle =
                 new TextTitle("Cumalitive Timeline (in gamedays) for " + this.statLabel.getLocalizedText());
         texttitle.setPosition(RectangleEdge.TOP);
@@ -60,7 +58,6 @@ public class CumulativeAreaChartProducer extends ChartProducer {
 
         XYPlot xyplot = (XYPlot) chart.getPlot();
         xyplot.setForegroundAlpha(0.65F);
-        xyplot.setBackgroundPaint(PLOT_BACKGROUND);
 
         NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
         numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());

@@ -26,7 +26,7 @@ import de.dengot.skyrim.model.SkyrimCharacterList;
 public class LevelBarChartProducer extends ChartProducer {
 
     @Override
-    public JFreeChart createChart(SkyrimCharacterList characters) {
+    protected JFreeChart createChart(SkyrimCharacterList characters) {
         
         CategoryDataset dataset = createDataset(characters);
         double avgLevel = getAverageLevel(characters);
@@ -35,10 +35,8 @@ public class LevelBarChartProducer extends ChartProducer {
                 ChartFactory.createBarChart3D("Character Levels", "Characters", "Level", dataset,
                         PlotOrientation.VERTICAL, false, true, false);
         
-        chart.setBackgroundPaint(CHART_BACKGROUND);
         
         CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
-        categoryplot.setBackgroundPaint(PLOT_BACKGROUND);
         
         AverageRelatedBarRenderer3D renderer = new AverageRelatedBarRenderer3D(avgLevel);
         renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());

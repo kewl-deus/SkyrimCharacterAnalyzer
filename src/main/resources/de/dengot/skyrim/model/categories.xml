@@ -75,7 +75,7 @@
 				<Localization Lang="en" Text="Locations Discovered" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Mauls">
-				<Localization Lang="de" Text="Fleisch gefressen" />
+				<Localization Lang="de" Text="Werwolfopfer" />
 				<Localization Lang="en" Text="Mauls" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Most Gold Carried">
@@ -376,7 +376,7 @@
 				<Localization Lang="en" Text="Days Jailed" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Eastmarch Bounty">
-				<Localization Lang="de" Text="Kopfgeld in Eastmarch" />
+				<Localization Lang="de" Text="Kopfgeld in Ostmarsch" />
 				<Localization Lang="en" Text="Eastmarch Bounty" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Falkreath Bounty">
@@ -392,7 +392,7 @@
 				<Localization Lang="en" Text="Haafingar Bounty" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Hjaalmarch Bounty">
-				<Localization Lang="de" Text="Kopfgeld in Hjaalmarch" />
+				<Localization Lang="de" Text="Kopfgeld in Hjaalmarsch" />
 				<Localization Lang="en" Text="Hjaalmarch Bounty" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Horses Stolen">
@@ -436,7 +436,7 @@
 				<Localization Lang="en" Text="The Reach Bounty" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="The Rift Bounty">
-				<Localization Lang="de" Text="Kopfgeld in Rifton" />
+				<Localization Lang="de" Text="Kopfgeld in Rift" />
 				<Localization Lang="en" Text="The Rift Bounty" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Times Jailed">
@@ -452,7 +452,7 @@
 				<Localization Lang="en" Text="Trespasses" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Tribal Orcs Bounty">
-				<Localization Lang="de" Text="Kopfeld in Orc Camps" />
+				<Localization Lang="de" Text="Orkstamm-Kopfeld" />
 				<Localization Lang="en" Text="Tribal Orcs Bounty" />
 			</LocalizedLabel>
 			<LocalizedLabel Key="Whiterun Bounty">

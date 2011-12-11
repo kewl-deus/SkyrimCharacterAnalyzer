@@ -32,7 +32,7 @@ public class CategoryBarChartProducer extends ChartProducer {
     }
 
     @Override
-    public JFreeChart createChart(SkyrimCharacterList characters) {
+    protected JFreeChart createChart(SkyrimCharacterList characters) {
 
         CategoryDataset dataset = createDataset(characters);
 
@@ -40,10 +40,7 @@ public class CategoryBarChartProducer extends ChartProducer {
                 ChartFactory.createBarChart3D(statsCategory.getLocalizedName(), "Category", "Amount",
                         dataset, PlotOrientation.VERTICAL, true, true, false);
 
-        chart.setBackgroundPaint(CHART_BACKGROUND);
-
         CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
-        categoryplot.setBackgroundPaint(PLOT_BACKGROUND);
 
         CategoryAxis categoryaxis = categoryplot.getDomainAxis();
         categoryaxis.setCategoryLabelPositions(CategoryLabelPositions

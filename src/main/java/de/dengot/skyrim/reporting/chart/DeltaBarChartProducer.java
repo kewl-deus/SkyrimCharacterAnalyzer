@@ -35,15 +35,13 @@ public class DeltaBarChartProducer extends ChartProducer {
     }
     
     @Override
-    public JFreeChart createChart(SkyrimCharacterList characters) {
+    protected JFreeChart createChart(SkyrimCharacterList characters) {
 
         IntervalXYDataset dataset = createDataset(characters);
 
         JFreeChart chart =
                 ChartFactory.createXYBarChart(this.statLabel.getLocalizedText(), SkyrimConstants.DAYS_PASSED, false,
                         "Amount", dataset, PlotOrientation.VERTICAL, true, true, false);
-
-        chart.setBackgroundPaint(CHART_BACKGROUND);
 
         TextTitle texttitle =
                 new TextTitle(MessageFormat.format("Change of {0} per gameday", this.statLabel.getLocalizedText()));
@@ -55,7 +53,6 @@ public class DeltaBarChartProducer extends ChartProducer {
 
         
         XYPlot plot = (XYPlot) chart.getPlot();
-        plot.setBackgroundPaint(PLOT_BACKGROUND);
         
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
