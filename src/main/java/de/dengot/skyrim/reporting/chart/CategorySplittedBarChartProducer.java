@@ -101,8 +101,8 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
         barrenderer.setBaseItemLabelsVisible(true);
         barrenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 
-        NumberAxis numberaxis = (NumberAxis) categoryplot.getRangeAxis();
-        numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
+//        NumberAxis numberaxis = (NumberAxis) categoryplot.getRangeAxis();
+//        numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
 
         return chart;
     }

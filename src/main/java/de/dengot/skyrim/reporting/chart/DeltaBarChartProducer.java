@@ -54,9 +54,9 @@ public class DeltaBarChartProducer extends ChartProducer {
         
         XYPlot plot = (XYPlot) chart.getPlot();
         
-        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
-        //rangeAxis.setTickUnit(new NumberTickUnit(10));
+//        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+//        rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
+//        rangeAxis.setTickUnit(new NumberTickUnit(10));
         
         XYBarRenderer renderer = (XYBarRenderer) plot.getRenderer();
         renderer.setBaseItemLabelsVisible(true);

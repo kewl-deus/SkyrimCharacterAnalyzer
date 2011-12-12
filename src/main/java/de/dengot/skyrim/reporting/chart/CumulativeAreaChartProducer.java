@@ -59,8 +59,8 @@ public class CumulativeAreaChartProducer extends ChartProducer {
         XYPlot xyplot = (XYPlot) chart.getPlot();
         xyplot.setForegroundAlpha(0.65F);
 
-        NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
-        numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
+//        NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
+//        numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
 
         return chart;
     }

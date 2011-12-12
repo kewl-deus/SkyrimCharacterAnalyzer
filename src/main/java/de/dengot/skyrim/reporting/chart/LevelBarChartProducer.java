@@ -54,8 +54,8 @@ public class LevelBarChartProducer extends ChartProducer {
         renderer.setMaximumBarWidth(0.050000000000000003D);
         
         
-        NumberAxis numberaxis = (NumberAxis) categoryplot.getRangeAxis();
-        numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
+//        NumberAxis numberaxis = (NumberAxis) categoryplot.getRangeAxis();
+//        numberaxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
         
         return chart;
     }
