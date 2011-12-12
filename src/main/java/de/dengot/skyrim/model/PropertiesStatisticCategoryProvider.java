@@ -21,7 +21,7 @@ public class PropertiesStatisticCategoryProvider extends StatisticCategoryProvid
 	private SortedSet<StatisticCategory> categories;
 
 	public PropertiesStatisticCategoryProvider() {
-		categories = new TreeSet<StatisticCategory>(CategoryComparator);
+		categories = new TreeSet<StatisticCategory>(CategoryByLocalizedNameComparator);
 		loadCategories();
 	}
 

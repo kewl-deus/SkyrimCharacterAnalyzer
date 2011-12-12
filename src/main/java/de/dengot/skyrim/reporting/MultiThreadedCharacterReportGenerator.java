@@ -414,7 +414,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
             escapedLabel.setText(Locale.getDefault(), escapedHtml);
             escapedLabels.add(escapedLabel);
         }
-        Collections.sort(escapedLabels, StatisticCategoryProvider.LocalizedLabelComparator);
+        Collections.sort(escapedLabels, StatisticCategoryProvider.LabelByLocalizedTextComparator);
         return escapedLabels;
     }
 }

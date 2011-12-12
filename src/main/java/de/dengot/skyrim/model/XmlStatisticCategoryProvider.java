@@ -28,7 +28,7 @@ public class XmlStatisticCategoryProvider extends StatisticCategoryProvider {
 		}
 
 		StatisticCategorySet categorySet = serializer.read(reader);
-		this.categories = new TreeSet<StatisticCategory>(CategoryComparator);
+		this.categories = new TreeSet<StatisticCategory>(CategoryByLocalizedNameComparator);
 		this.categories.addAll(categorySet.getCategories());
 	}
 

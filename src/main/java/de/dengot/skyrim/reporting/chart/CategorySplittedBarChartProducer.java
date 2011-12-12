@@ -1,6 +1,9 @@
 package de.dengot.skyrim.reporting.chart;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.ListIterator;
 
 import org.jfree.chart.ChartFactory;
@@ -26,6 +29,7 @@ import de.dengot.skyrim.model.LocalizedLabel;
 import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.StatisticCategory;
+import de.dengot.skyrim.model.StatisticCategoryProvider;
 
 public class CategorySplittedBarChartProducer extends ChartProducer {
 
@@ -127,7 +131,10 @@ public class CategorySplittedBarChartProducer extends ChartProducer {
     protected CategoryDataset createDataset(SkyrimCharacterList characters) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (LocalizedLabel statLabel : this.statsCategory.getStatLabels()) {
+        List<LocalizedLabel> sortedLabels = new ArrayList<LocalizedLabel>(this.statsCategory.getStatLabels());
+        Collections.sort(sortedLabels, StatisticCategoryProvider.LabelByLocalizedTextComparator);
+        
+        for (LocalizedLabel statLabel : sortedLabels) {
             for (SkyrimCharacter skyrimCharacter : characters) {
                 int value = getCharacterValue(skyrimCharacter, statLabel);
                 dataset.addValue(value, skyrimCharacter.getName(), statLabel.getLocalizedText());

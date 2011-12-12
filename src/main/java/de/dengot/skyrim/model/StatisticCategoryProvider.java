@@ -9,13 +9,13 @@ import java.util.SortedSet;
 
 public abstract class StatisticCategoryProvider implements Iterable<StatisticCategory> {
 
-	public static final Comparator<StatisticCategory> CategoryComparator = new Comparator<StatisticCategory>() {
+    public static final Comparator<StatisticCategory> CategoryByLocalizedNameComparator = new Comparator<StatisticCategory>() {
 		public int compare(StatisticCategory o1, StatisticCategory o2) {
 			return o1.getLocalizedName().compareTo(o2.getLocalizedName());
 		}
 	};
 
-	public static final Comparator<LocalizedLabel> LocalizedLabelComparator = new Comparator<LocalizedLabel>() {
+	public static final Comparator<LocalizedLabel> LabelByLocalizedTextComparator = new Comparator<LocalizedLabel>() {
 		public int compare(LocalizedLabel l1, LocalizedLabel l2) {
 			return l1.getLocalizedText().compareTo(l2.getLocalizedText());
 		};
@@ -29,7 +29,7 @@ public abstract class StatisticCategoryProvider implements Iterable<StatisticCat
 			allStats.addAll(category.getStatLabels());
 		}
 
-		Collections.sort(allStats, LocalizedLabelComparator);
+		Collections.sort(allStats, LabelByLocalizedTextComparator);
 		return allStats;
 	}
 
