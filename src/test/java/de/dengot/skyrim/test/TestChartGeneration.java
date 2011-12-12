@@ -33,11 +33,11 @@ public class TestChartGeneration extends AbstractSkyrimCharacterBasedTestCase {
 //		}
 
 		LocalizedLabel statLabel = new LocalizedLabel("Chests Looted");
-		writeChart(new TimeSeriesChartProducer(statLabel, false), "RealTimeLineChart");
-		writeChart(new TimeSeriesChartProducer(statLabel, true), "RealTimeAreaChart");
-		writeChart(new CumulativeAreaChartProducer(statLabel, false), "CumulativeAreaChart");
-		writeChart(new CumulativeAreaChartProducer(statLabel, true), "CumulativeAreaChart-Normalized");
-//		writeChart(new DeltaBarChartProducer(statLabel), "DeltaBarChart");
+//		writeChart(new TimeSeriesChartProducer(statLabel, false), "RealTimeLineChart");
+//		writeChart(new TimeSeriesChartProducer(statLabel, true), "RealTimeAreaChart");
+//		writeChart(new CumulativeAreaChartProducer(statLabel, false), "CumulativeAreaChart");
+//		writeChart(new CumulativeAreaChartProducer(statLabel, true), "CumulativeAreaChart-Normalized");
+		writeChart(new DeltaBarChartProducer(statLabel), "DeltaBarChart");
 //		writeChart(new LevelBarChartProducer(), "LevelBarChart");
 //		writeChart(new LevelCumulativeAreaChartProducer(), "LevelCumulativeAreaChart");
 //		writeChart(new LevelDeltaBarChartProducer(), "LevelDeltaBarChart");

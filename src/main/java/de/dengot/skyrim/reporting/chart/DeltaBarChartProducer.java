@@ -72,13 +72,16 @@ public class DeltaBarChartProducer extends ChartProducer {
 
             XYSeries xyseries = new XYSeries(skyrimCharacter.getName());
 
-            int lastDaysValue = 0;
+            int lastDaysValue = Integer.MIN_VALUE;
             for (SkyrimCharacterSnapshot snapshot : skyrimCharacter.getHistory()) {
 
                 int gameDay = snapshot.getStatisticValue(SkyrimConstants.DAYS_PASSED);
                 int value = getSnapshotValue(snapshot);
-                int deltaValue = value - lastDaysValue;
-                xyseries.add(new Integer(gameDay), new Integer(deltaValue));
+                
+                if (lastDaysValue != Integer.MIN_VALUE){
+                    int deltaValue = value - lastDaysValue;
+                    xyseries.add(new Integer(gameDay), new Integer(deltaValue));    
+                }
                 lastDaysValue = value;
             }
 
