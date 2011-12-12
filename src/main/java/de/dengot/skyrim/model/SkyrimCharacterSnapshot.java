@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.converters.extended.ISO8601GregorianCalendarConverter;
 
 @XStreamAlias("Snapshot")
 public class SkyrimCharacterSnapshot {
@@ -21,6 +23,7 @@ public class SkyrimCharacterSnapshot {
 
 	@XStreamAlias("SaveTime")
 	@XStreamAsAttribute
+	@XStreamConverter(ISO8601GregorianCalendarConverter.class)
 	private Calendar saveTime;
 
 	@XStreamAlias("Level")

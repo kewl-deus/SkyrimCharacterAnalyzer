@@ -20,21 +20,22 @@ import de.dengot.skyrim.reporting.chart.DeltaBarChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelBarChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelCumulativeAreaChartProducer;
 import de.dengot.skyrim.reporting.chart.LevelDeltaBarChartProducer;
+import de.dengot.skyrim.reporting.chart.TimeSeriesChartProducer;
 
 public class TestChartGeneration extends AbstractSkyrimCharacterBasedTestCase {
 
 	@Test
 	public void testChartProduction() throws IOException {
-		StatisticCategoryProvider catProvider = new XmlStatisticCategoryProvider();
-
-		for (StatisticCategory cat : catProvider) {
-			writeChart(new CategorySplittedBarChartProducer(cat), "CategorySplittedBarChart-" + cat.getName().getKey());
-			writeChart(new CategoryBarChartProducer(cat), "CategoryBarChart-" + cat.getName().getKey());
-		}
+//		StatisticCategoryProvider catProvider = new XmlStatisticCategoryProvider();
+//		for (StatisticCategory cat : catProvider) {
+//			writeChart(new CategorySplittedBarChartProducer(cat), "CategorySplittedBarChart-" + cat.getName().getKey());
+//			writeChart(new CategoryBarChartProducer(cat), "CategoryBarChart-" + cat.getName().getKey());
+//		}
 
 		LocalizedLabel statLabel = new LocalizedLabel("Chests Looted");
+		writeChart(new TimeSeriesChartProducer(statLabel), "TimeSeriesChart");
 		writeChart(new CumulativeAreaChartProducer(statLabel, false), "CumulativeAreaChart");
-		writeChart(new CumulativeAreaChartProducer(statLabel, true), "NormalizedCumulativeAreaChart");
+		writeChart(new CumulativeAreaChartProducer(statLabel, true), "CumulativeAreaChart-Normalized");
 		writeChart(new DeltaBarChartProducer(statLabel), "DeltaBarChart");
 		writeChart(new LevelBarChartProducer(), "LevelBarChart");
 		writeChart(new LevelCumulativeAreaChartProducer(), "LevelCumulativeAreaChart");
