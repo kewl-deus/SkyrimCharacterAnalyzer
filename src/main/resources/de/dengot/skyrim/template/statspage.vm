@@ -18,6 +18,14 @@
 <hr size="1">
 
 <p>
+<img src="${statName} realtime-areachart.png" alt="${statName} realtime-areachart" />
+</table>
+
+</p>
+
+<hr size="1">
+
+<p>
 <img src="${statName} cumulative-areachart.png" alt="${statName} cumulative-areachart" />
 
 <h3>Cumulated value per character</h3>
