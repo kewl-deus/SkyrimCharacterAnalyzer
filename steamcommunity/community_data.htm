@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <link type="image/x-icon" href="https://partner.steamgames.com/public/favicon.ico" rel="shortcut icon"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Steamworks - Community Data</title>
+	<link href="https://partner.steamgames.com/public/css/styles_global_new.css" rel="stylesheet" type="text/css" />
+	<link href="https://partner.steamgames.com/public/css/styles_print.css" rel="stylesheet" type="text/css" media="print" />
+	<style type="text/css">
+	#pageContainer, #mainbody, body, html {
+		min-height:100%;
+	}
+	</style>
+	<!--[if lt IE 7]>
+	<style type="text/css">
+	#pageContainer {
+		height:100%;
+	}
+	</style>
+	<![endif]-->
+</head>
+<body>
+<div id="pageContainer">
+	<!-- header -->
+	<div id="header"><img src="https://partner.steamgames.com/public/images/logo_steamworks.gif" height="76" width="240" border="0" /></div>
+	
+<div id="header_menu">
+<span id="header_right">
+	<span class="header_content">Universe: <strong>public</strong></span>
+	<span class="header_spacer">|</span>
+	<span class="header_menu_item"><a href="https://partner.steamgames.com">Login</a></span>
+</span>
+</div>
+
+	<!-- /header -->
+	<center>
+	<!-- main content area -->
+	<div id="mainbody">
+		<!-- right column, floated right -->
+		<div id="rightCol">
+			<!-- news section -->
+			<br>
+			<div class="newsBlock" style="padding-top:64px;">
+				<div class="newsBody">
+									Further links and information are available once you have signed up and logged into your account <a class="contentsLink" href="https://partner.steamgames.com">here</a>
+								</div>
+			</div>
+			<!-- /news section -->
+		</div>
+		<!-- /right column -->
+		<!-- main content -->
+		<div id="leftAreaTop"><img src="https://partner.steamgames.com/public/images/bg_left_top.gif" width="683" height="12" border="0" /></div>
+		<div id="leftAreaContainer">
+			<br>
+			<h1>Community Data</h1>
+			<br>
+			<div class="rule"><img src="https://partner.steamgames.com/public/images/hr.gif" height="1" width="619"></div>
+			
+			
+<p>Steam provides access to community data in an XML format that can be consumed by game developers and other community 
+sites. It is important to note that a player's data might be unavailable if the player's privacy settings prevent the data from being
+exposed.
+</p>
+<a name="profile"></a><h2>Player Profile</h2>
+Information presented on a player's profile page is available using the player's 64-bit Steam ID with:<br>
+<ul>
+<li>Format: <code>http://steamcommunity.com/profiles/<span style="color: #B6C5CA">&lt;SteamID&gt;</span>/?xml=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/profiles/76561197968575517/?xml=1" target="_new">http://steamcommunity.com/profiles/76561197968575517/?xml=1</a></li>
+</ul>
+
+or using their Custom URL (set by the user in their profile):
+<ul>
+<li>Format: <code>http://steamcommunity.com/id/<span style="color: #B6C5CA">&lt;CustomURL&gt;</span>/?xml=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/id/ChetFaliszek/?xml=1" target="_new">http://steamcommunity.com/id/ChetFaliszek/?xml=1</a></li> 
+</ul>
+
+<br><a name="stats"></a><h2>Player Game Stats</h2>
+<p>To retrieve game stats, you will need the game's Steam Community name. Developers can contact Valve to obtain the community name for their game.</p> 
+You can retrieve stats and achievements for a player per game using the player's 64-bit Steam ID with:<br>
+<ul>
+<li>Format: <code>http://steamcommunity.com/profiles/<span style="color: #B6C5CA">&lt;SteamID&gt;</span>/stats/<span style="color: #B6C5CA">&lt;CommunityGameName&gt;</span>/?xml=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/profiles/76561197968575517/stats/L4D/?xml=1" target="_new">http://steamcommunity.com/profiles/76561197968575517/stats/L4D/?xml=1</a></li>
+</ul>
+
+or using their Custom URL (set by the user in their profile):
+<ul>
+<li>Format: <code>http://steamcommunity.com/id/<span style="color: #B6C5CA">&lt;CustomURL&gt;</span>/stats/<span style="color: #B6C5CA">&lt;CommunityGameName&gt;</span>/?xml=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/id/ChetFaliszek/stats/L4D/?xml=1" target="_new">http://steamcommunity.com/id/ChetFaliszek/stats/L4D/?xml=1</a></li>
+</ul>
+<p>Note: For most games, the Steam Community only exposes achievements a user has received. However, a player's game play stats are
+exposed for games that have a custom Steam Community stats page.</p>
+
+<p>For games that are configured to expose raw stats data, you can retrieve stats for a user using their 64-bit Steam ID and the game's Application ID with:</p>
+<ul>
+<li>Format: <code>http://steamcommunity.com/profiles/<span style="color: #B6C5CA">&lt;SteamID&gt;</span>/statsfeed/<span style="color: #B6C5CA">&lt;AppID&gt;</span>/?xml=1&amp;schema=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/profiles/76561197968575517/statsfeed/500/?xml=1&schema=1" target="_new">http://steamcommunity.com/profiles/76561197968575517/statsfeed/500/?xml=1&schema=1</a></li>
+</ul>
+
+or using their Custom URL (set by the user in their profile) and the game's Application ID with:
+<ul>
+<li>Format: <code>http://steamcommunity.com/id/<span style="color: #B6C5CA">&lt;CustomURL&gt;</span>/statsfeed/<span style="color: #B6C5CA">&lt;AppID&gt;</span>/?xml=1&amp;schema=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/id/ChetFaliszek/statsfeed/500/?xml=1&schema=1" target="_new">http://steamcommunity.com/id/ChetFaliszek/statsfeed/500/?xml=1&schema=1</a></li>
+</ul>
+
+<br><a name="leaderboards"></a><h2>Leaderboards</h2>
+<p>To retrieve entries for a leaderboard, you will need the leaderboard's ID. The ID for each leaderboard is returned in the list of leaderboards for a game.</p>  
+You can retrieve the list of leaderboards for a game using the game's Steam Community name with:<br>
+<ul>
+<li>Format: <code>http://steamcommunity.com/stats/<span style="color: #B6C5CA">&lt;CommunityGameName&gt;</span>/leaderboards/?xml=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/stats/L4D/leaderboards/?xml=1" target="_new">http://steamcommunity.com/stats/L4D/leaderboards/?xml=1</a></li>
+</ul>
+
+You can retrieve all leaderboard entries created by friends of a player using the player's 64-bit Steam ID with:
+<ul>
+<li>Format: <code>http://steamcommunity.com/stats/<span style="color: #B6C5CA">&lt;CommunityGameName&gt;</span>/leaderboards/<span style="color: #B6C5CA">&lt;LeaderboardID&gt;</span>/?xml=1&amp;steamid=<span style="color: #B6C5CA">&lt;SteamID&gt;</span></code></li>
+<li>Example: <a href="http://steamcommunity.com/stats/L4D/leaderboards/30/?xml=1&steamid=76561197968575517" target="_new">http://steamcommunity.com/stats/L4D/leaderboards/30/?xml=1&steamid=76561197968575517</a></li>
+</ul>
+
+You can retrieve a global range of leaderboard entries with (<code>StartRange</code> and <code>EndRange</code> are integers):
+<ul>
+<li>Format: <code>http://steamcommunity.com/stats/<span style="color: #B6C5CA">&lt;CommunityGameName&gt;</span>/leaderboards/<span style="color: #B6C5CA">&lt;LeaderboardID&gt;</span>/?xml=1&amp;start=<span style="color: #B6C5CA">&lt;StartRange&gt;</span>&amp;end=<span style="color: #B6C5CA">&lt;EndRange&gt;</span></code></li>
+<li>Example (retrieves top 10): <a href="http://steamcommunity.com/stats/L4D/leaderboards/30/?xml=1&amp;start=1&amp;end=10" target="_new">http://steamcommunity.com/stats/L4D/leaderboards/30/?xml=1&amp;start=1&amp;end=10</a></li>
+</ul>
+ 
+<br><a name="groups"></a><h2>Groups</h2>
+You can retrieve the list of members in a group by using the group's 64-bit Steam ID with:
+<ul>
+<li>Format: <code>http://steamcommunity.com/gid/<span style="color: #B6C5CA">&lt;GroupID&gt;</span>/memberslistxml/?xml=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/gid/103582791429521412/memberslistxml/?xml=1" target="_new">http://steamcommunity.com/gid/103582791429521412/memberslistxml/?xml=1</a></li>
+</ul>
+
+or using the group's Steam Community name with:
+<ul>
+<li>Format: <code>http://steamcommunity.com/groups/<span style="color: #B6C5CA">&lt;GroupName&gt;</span>/memberslistxml/?xml=1</code></li>
+<li>Example: <a href="http://steamcommunity.com/groups/Valve/memberslistxml/?xml=1" target="_new">http://steamcommunity.com/groups/Valve/memberslistxml/?xml=1</a></li>
+</ul>
+			
+		</div>
+		<div id="leftAreaBottom"><img src="https://partner.steamgames.com/public/images/bg_left_bottom.gif" height="4" width="683" border="0" /></div>
+
+		<!-- /main content -->
+	</div>
+	<!-- /main content area -->
+	</center>
+	<!-- footer -->
+	<img src="https://partner.steamgames.com/public/images/trans.gif" width="1" height="89" border="0" /><br />
+	<!-- Footer -->
+<div id="footer">
+	<div id="footer_logo"><img src="https://partner.steamgames.com/public/images/footer_logo.jpg" alt="Valve Software"></div>
+	<div id="footer_text">
+				<div id="footer_bold">&nbsp;</div>
+				&copy; Valve Corporation. All rights reserved. All trademarks are property of their respective owners in the US and other countries.
+	</div>
+</div>
+<!-- End Footer -->
+	<!-- /footer -->
+</div>
+<!-- /primary page container -->
+</body>
+</html>
