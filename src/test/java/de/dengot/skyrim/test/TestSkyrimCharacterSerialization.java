@@ -16,7 +16,7 @@ public class TestSkyrimCharacterSerialization {
 
     @Test
     public void testReadFromXml() {
-        InputStream input = getClass().getResourceAsStream("/skyrimcharacters.xml");
+        InputStream input = getClass().getResourceAsStream("/sampledata/skyrimcharacters.xml");
         InputStreamReader reader = new InputStreamReader(input);
 
         SkyrimCharacterSerializer serializer = new XmlSkyrimCharacterSerializer();

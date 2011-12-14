@@ -28,6 +28,7 @@ public class QueryOptimizedModelFactory {
 
 		QueryOptimizedCharacter qoChar = new QueryOptimizedCharacter(character.getName(), character.getRace(),
 				optHistory);
+
 		return qoChar;
 	}
 

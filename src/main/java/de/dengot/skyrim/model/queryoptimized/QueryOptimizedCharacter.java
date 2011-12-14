@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.dengot.skyrim.model.SkyrimCharacter;
 import de.dengot.skyrim.model.SkyrimCharacterSnapshot;
 import de.dengot.skyrim.model.SkyrimConstants;
 import de.dengot.skyrim.model.SnapshotStatisticComparator;
+import de.dengot.skyrim.model.steam.SteamSkyrimCharacter;
 
-public class QueryOptimizedCharacter extends SkyrimCharacter {
+public class QueryOptimizedCharacter extends SteamSkyrimCharacter {
 
     private static List<SkyrimCharacterSnapshot> sort(List<SkyrimCharacterSnapshot> snapshots) {
         List<SkyrimCharacterSnapshot> history = new ArrayList<SkyrimCharacterSnapshot>(snapshots);
