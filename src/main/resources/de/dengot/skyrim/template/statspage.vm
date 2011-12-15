@@ -19,8 +19,6 @@
 
 <p>
 <img src="${statName} realtime-areachart.png" alt="${statName} realtime-areachart" />
-</table>
-
 </p>
 
 <hr size="1">

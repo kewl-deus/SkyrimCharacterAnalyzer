@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Skyrim Steam Playerstats Report</title>
+<link title="Style" type="text/css" rel="stylesheet" href="steam-playerstats.css" />
+<link title="Style" type="text/css" rel="stylesheet" href="steam-global.css" />
+</head>
+<body>
+
+<div id="BG_top">
+
+	<!--
+	<div id="headerAvatar">
+		<div class="mediumHolder_default">
+			<div class="avatarMedium">
+				<img src="avatar_medium.jpg">
+			</div>
+		</div>
+	</div>
+	-->
+	
+	<h2>The Elder Scrolls V: Skyrim</h2>
+	<h1>Steam Playerstats Report</h1>
+	
+		<div id="logo">
+		<div class="gameLogoHolder_default">
+			<div class="gameLogo">
+				<img src="skyrim_logo.jpg">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<hr size="1">
+
+<p>
+<img src="playtime-barchart.png" />
+</p>
+
+<hr size="1">
+
+<p>
+<img src="achievements-timeline-chart.png" />
+</p>
+
+<p>
+
+<div id="mainContents">
+
+	<div id="personalAchieve">
+
+		#foreach($achieve in $achievements)
+		<div class="achieveImgHolder" style="background:url(${achieve.logo}) center center no-repeat; background-color:rgb(38,38,39);">
+			<!-- img src="${achieve.logo}" border="0" height="64" width="64" -->
+		</div>
+	
+	
+		<div class="achieveTxtHolder" style="background-color:rgb(38,38,39);>
+			<!-- img src="achieveBG.gif" border="0" height="84" width="747" -->
+			<div class="achieveTxt">
+				<div class="achieveUnlockTime" style="float:right;">
+					<table>
+						#foreach( $row in $achieveRankings[$achieve.apiName].rows )
+						<tr>
+							#foreach( $column in $achieveRankings[$achieve.apiName].columns )
+							<td>$row.getCell($column)</td>
+							#end
+						</tr>
+						#end
+					</table>
+				</div>
+				<h3>${achieve.name}</h3>
+				<h5>${achieve.description}</h5>
+			</div>
+		</div>
+		
+		<br clear="left">
+		#end
+			
+	</div><!-- personalAchieve -->
+</div> <!-- mainContents -->
+</p>
+
+</html>
