@@ -34,13 +34,13 @@ import de.dengot.skyrim.model.SkyrimCharacterList;
 import de.dengot.skyrim.model.StatisticCategory;
 import de.dengot.skyrim.model.StatisticCategoryProvider;
 import de.dengot.skyrim.model.XmlStatisticCategoryProvider;
-import de.dengot.skyrim.reporting.chart.CategoryBarChartProducer;
-import de.dengot.skyrim.reporting.chart.CumulativeAreaChartProducer;
-import de.dengot.skyrim.reporting.chart.DeltaBarChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelBarChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelCumulativeAreaChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelDeltaBarChartProducer;
-import de.dengot.skyrim.reporting.chart.TimeSeriesChartProducer;
+import de.dengot.skyrim.reporting.chart.character.CategoryBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.CumulativeAreaChartProducer;
+import de.dengot.skyrim.reporting.chart.character.DeltaBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.LevelBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.LevelCumulativeAreaChartProducer;
+import de.dengot.skyrim.reporting.chart.character.LevelDeltaBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.TimeSeriesChartProducer;
 import de.dengot.skyrim.reporting.table.Table;
 import de.dengot.skyrim.reporting.table.TableRow;
 import de.dengot.skyrim.reporting.worker.ChartProductionWorker;
@@ -179,7 +179,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
     private synchronized Template loadTemplate(String filename) {
         Template template = templates.get(filename);
         if (template == null) {
-            template = velocity.getTemplate("/de/dengot/skyrim/template/" + filename);
+            template = velocity.getTemplate("/de/dengot/skyrim/template/" + filename + ".html");
             templates.put(filename, template);
         }
         return template;
@@ -243,7 +243,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         VelocityContext context = new VelocityContext();
         context.put("categories", statCatProvider.getCategories());
         FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-categories.html"));
-        loadTemplate("frame-categories.vm").merge(context, writer);
+        loadTemplate("frame-categories").merge(context, writer);
         writer.flush();
         writer.close();
     }
@@ -252,7 +252,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         VelocityContext context = new VelocityContext();
         context.put("statLabels", escapeHtml(statCatProvider.getAllStats()));
         FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-statnames.html"));
-        loadTemplate("frame-category-content.vm").merge(context, writer);
+        loadTemplate("frame-category-content").merge(context, writer);
         writer.flush();
         writer.close();
     }
@@ -263,7 +263,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         context.put("statLabels", escapeHtml(category.getStatLabels()));
         File outputFile =
                 new File(this.outputFolder, "frame-" + category.getName().getKey() + ".html");
-        return new TemplateMergeWorkload(loadTemplate("frame-category-content.vm"), context,
+        return new TemplateMergeWorkload(loadTemplate("frame-category-content"), context,
                 outputFile);
     }
 
@@ -273,7 +273,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         context.put("statName", statLabel.getKey());
         context.put("playerMaxValueTable", createStatsTable(statLabel, characters));
         File outputFile = new File(this.outputFolder, statLabel.getKey() + ".html");
-        return new TemplateMergeWorkload(loadTemplate("statspage.vm"), context, outputFile);
+        return new TemplateMergeWorkload(loadTemplate("statspage"), context, outputFile);
     }
 
     private TemplateMergeWorkload createCategorySummaryFrameWorkload(StatisticCategory category,
@@ -287,7 +287,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
         File outputFile =
                 new File(this.outputFolder, "frame-summary-" + category.getName().getKey()
                         + ".html");
-        return new TemplateMergeWorkload(loadTemplate("category-summarypage.vm"), context,
+        return new TemplateMergeWorkload(loadTemplate("category-summarypage"), context,
                 outputFile);
     }
 
@@ -390,7 +390,7 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
                 escapeHtml(statCatProvider.getAllStats())));
 
         FileWriter writer = new FileWriter(new File(this.outputFolder, "frame-summary.html"));
-        loadTemplate("frame-summary.vm").merge(context, writer);
+        loadTemplate("frame-summary").merge(context, writer);
         writer.flush();
         writer.close();
     }

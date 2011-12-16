@@ -12,15 +12,15 @@ import de.dengot.skyrim.model.LocalizedLabel;
 import de.dengot.skyrim.model.StatisticCategory;
 import de.dengot.skyrim.model.StatisticCategoryProvider;
 import de.dengot.skyrim.model.XmlStatisticCategoryProvider;
-import de.dengot.skyrim.reporting.chart.CategoryBarChartProducer;
-import de.dengot.skyrim.reporting.chart.CategorySplittedBarChartProducer;
-import de.dengot.skyrim.reporting.chart.ChartProducer;
-import de.dengot.skyrim.reporting.chart.CumulativeAreaChartProducer;
-import de.dengot.skyrim.reporting.chart.DeltaBarChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelBarChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelCumulativeAreaChartProducer;
-import de.dengot.skyrim.reporting.chart.LevelDeltaBarChartProducer;
-import de.dengot.skyrim.reporting.chart.TimeSeriesChartProducer;
+import de.dengot.skyrim.reporting.chart.character.CategoryBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.CategorySplittedBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.CharacterChartProducer;
+import de.dengot.skyrim.reporting.chart.character.CumulativeAreaChartProducer;
+import de.dengot.skyrim.reporting.chart.character.DeltaBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.LevelBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.LevelCumulativeAreaChartProducer;
+import de.dengot.skyrim.reporting.chart.character.LevelDeltaBarChartProducer;
+import de.dengot.skyrim.reporting.chart.character.TimeSeriesChartProducer;
 
 public class TestChartGeneration extends AbstractSkyrimCharacterBasedTestCase {
 
@@ -44,7 +44,7 @@ public class TestChartGeneration extends AbstractSkyrimCharacterBasedTestCase {
 
 	}
 
-	public void writeChart(ChartProducer chartProducer, String filename) throws IOException {
+	public void writeChart(CharacterChartProducer chartProducer, String filename) throws IOException {
 		System.out.println("Writing " + filename);
 		JFreeChart chart = chartProducer.produceChart(sampleCharacters);
 		ChartWriter cw = new PngChartWriter();

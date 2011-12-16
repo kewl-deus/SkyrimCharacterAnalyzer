@@ -4,11 +4,11 @@ import java.io.File;
 
 import de.dengot.skyrim.io.ChartWriter;
 import de.dengot.skyrim.model.SkyrimCharacterList;
-import de.dengot.skyrim.reporting.chart.ChartProducer;
+import de.dengot.skyrim.reporting.chart.character.CharacterChartProducer;
 
 public class ChartProductionWorkload {
 
-    private ChartProducer chartProducer;
+    private CharacterChartProducer chartProducer;
     private ChartWriter chartWriter;
     private File outputFile;
     private SkyrimCharacterList skyrimCharacters;
@@ -17,7 +17,7 @@ public class ChartProductionWorkload {
 
     
     
-    public ChartProductionWorkload(ChartProducer chartProducer, ChartWriter chartWriter,
+    public ChartProductionWorkload(CharacterChartProducer chartProducer, ChartWriter chartWriter,
             File outputFile, SkyrimCharacterList skyrimCharacters, int width, int height) {
         super();
         this.chartProducer = chartProducer;
@@ -28,7 +28,7 @@ public class ChartProductionWorkload {
         this.height = height;
     }
 
-    public ChartProducer getChartProducer() {
+    public CharacterChartProducer getChartProducer() {
         return chartProducer;
     }
 

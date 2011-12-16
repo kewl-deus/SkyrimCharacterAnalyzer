@@ -9,7 +9,7 @@ import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
 import de.dengot.skyrim.io.ChartWriter;
-import de.dengot.skyrim.reporting.chart.ChartProducer;
+import de.dengot.skyrim.reporting.chart.character.CharacterChartProducer;
 
 public class ChartProductionWorker implements Runnable {
     private static final XLogger LOGGER = XLoggerFactory.getXLogger(ChartProductionWorker.class);
@@ -33,7 +33,7 @@ public class ChartProductionWorker implements Runnable {
 
                 LOGGER.trace("Writing " + workload.getOutputFile().getPath());
 
-                ChartProducer producer = workload.getChartProducer();
+                CharacterChartProducer producer = workload.getChartProducer();
                 JFreeChart chart = producer.produceChart(workload.getSkyrimCharacters());
                                 
                 ChartWriter writer = workload.getChartWriter();
