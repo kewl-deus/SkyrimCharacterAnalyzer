@@ -218,14 +218,14 @@ public class MultiThreadedCharacterReportGenerator extends CharacterReportGenera
             workloadList.add(workloadDeltaBarChart);
 
             //realtime chart
-            String filenameTimeSeriesChart =
-                    this.chartWriter.suffixFilename(format("{0} {1}", statLabel.getKey(),
-                            "realtime-areachart"));
-            ChartProductionWorkload workloadTimeSeriesChart =
-                    new ChartProductionWorkload(new TimeSeriesChartProducer(statLabel, true),
-                            chartWriter, new File(this.outputFolder, filenameTimeSeriesChart),
-                            characters, CHART_WIDTH, CHART_HEIGHT);
-            workloadList.add(workloadTimeSeriesChart);
+//            String filenameTimeSeriesChart =
+//                    this.chartWriter.suffixFilename(format("{0} {1}", statLabel.getKey(),
+//                            "realtime-areachart"));
+//            ChartProductionWorkload workloadTimeSeriesChart =
+//                    new ChartProductionWorkload(new TimeSeriesChartProducer(statLabel, true),
+//                            chartWriter, new File(this.outputFolder, filenameTimeSeriesChart),
+//                            characters, CHART_WIDTH, CHART_HEIGHT);
+//            workloadList.add(workloadTimeSeriesChart);
         }
 
         return workloadList;

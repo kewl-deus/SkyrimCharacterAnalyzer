@@ -18,7 +18,7 @@ public class AbstractSkyrimCharacterBasedTestCase {
 	@SuppressWarnings("unused")
 	@BeforeTest
 	protected void loadSampleCharacters() {
-		InputStream input = getClass().getResourceAsStream("/sampledata/skyrimcharacters.xml");
+		InputStream input = getClass().getResourceAsStream("/sampledata/mySkyrimcharacters.xml");
 		InputStreamReader reader = new InputStreamReader(input);
 
 		SkyrimCharacterSerializer serializer = new QueryOptimizedSkyrimCharacterSerializer(
